@@ -55,4 +55,4 @@ import logo2023 from '$lib/assets/skyline/img/logo2023.png';
 export const logo = logo2023;
 export const taxRate = 0.101;
 export const payPalEnabled = false;
-export const closeDate = new Date(2023, 1, 23, 0, 0, 0);
+export const closeDate = new Date(2023, 1, 23, 10, 0, 0);

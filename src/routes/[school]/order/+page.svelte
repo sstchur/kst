@@ -2,12 +2,16 @@
 	import ProductDetails from "$lib/components/ProductDetails/ProductDetails.svelte";
     import { openModal } from 'svelte-modals';
     import ItemAddedModal from '$lib/components/ItemAddedModal/ItemAddedModal.svelte';
+    import * as catalogs from '$lib/assets/catalogs';
 	import { createShoppingCart } from "$lib/components/ShoppingCart/shoppingCart";
-	import { page } from "$app/stores";
+    import { closeDate, timeLeft } from '$lib/stores/timeLeft';
+    const { closed } = timeLeft;
 
     export let data;
     const { products, school } = data;
     const shoppingCart = createShoppingCart(school);
+
+    $closeDate = catalogs[school].closeDate;
 
     function addToCart(event) {
         const { productInstance } = event.detail;
@@ -17,10 +21,12 @@
 
 </script>
 
-<div style="display: flex; flex-wrap: wrap; justify-content: center">
-    {#each products as product}
-        <div class="product">
-            <ProductDetails {product} on:addToCart={addToCart} />
-        </div>
-    {/each}
-</div>
+{#if !$closed}
+    <div style="display: flex; flex-wrap: wrap; justify-content: center">
+        {#each products as product}
+            <div class="product">
+                <ProductDetails {product} on:addToCart={addToCart} />
+            </div>
+        {/each}
+    </div>
+{/if}

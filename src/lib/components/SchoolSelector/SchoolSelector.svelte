@@ -1,15 +1,16 @@
 <script lang="ts">
     import * as catalogs from '$lib/assets/catalogs';
 	import { createEventDispatcher } from 'svelte';
+    import { closeDate, timeLeft } from '$lib/stores/timeLeft';
+    const { closed } = timeLeft;
 
     export let school: keyof typeof catalogs | '' = '';
     export let schools: { key: string, name: (keyof typeof catalogs)}[];
-
-    $: closeDate = catalogs[school]?.closeDate;
   
     const dispatch = createEventDispatcher();
   
     function dispatchSchoolChange() {
+        $closeDate = catalogs[school].closeDate;
         dispatch('schoolChange', { school });
     }
 </script>
@@ -21,7 +22,7 @@
     {/each}
 </select>
 
-{#if school}
+{#if !$closed && school}
     <a href="/{school}/order">Order form</a>
 
     <img src={catalogs[school].logo} alt="School tennis logo for 2023"/>

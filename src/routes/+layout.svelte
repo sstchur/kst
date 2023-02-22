@@ -43,7 +43,9 @@
         <Timer />
     {/if}
 
-    <h2>{$page.data.title}</h2>
+    {#if $page.data.title}
+        <h2>{$page.data.title}</h2>
+    {/if}
 </div>
 
 <slot></slot>

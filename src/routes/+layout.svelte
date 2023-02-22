@@ -26,6 +26,8 @@
 
 <a href="/"><img id="kstLogo" src="https://kickserve.biz/kstlogo.png" alt="Kick Serve Tennis logo" height=150/></a>
 
+<slot></slot>
+
 <style>
     nav {
         display: flex;

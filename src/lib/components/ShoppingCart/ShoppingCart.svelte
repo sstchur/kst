@@ -50,8 +50,8 @@
             }
         },
         items: $cartItems.map((p, i) => ({
-            name: p.title,
-            description: `SIZE: ${p.size},  CUSTOMIZATION: ${p.customization}, VARSITY: ${p.varsity}`,
+            name: `${p.title} - SIZE: ${p.size}, CUSTOMIZATION: ${p.customization || 'N/A'}, VARSITY: ${p.varsity || 'N/A'}`,
+            description: `SIZE: ${p.size}, CUSTOMIZATION: ${p.customization || 'N/A'}, VARSITY: ${p.varsity || 'N/A'}`,
             unit_amount: {
                 currency_code,
                 value: `${p.price}`
@@ -71,7 +71,7 @@
     let payPalTxnId = '';
 
     // AZ6KxIlNEhfWChYzGXiJtfMZOrkrllJmRc1MYhNnGAytbjk3_YMDeOIf4M24TYi-OKdd7IYdOUxZ5R9X
-    loadScript({ "client-id": 'AZ6KxIlNEhfWChYzGXiJtfMZOrkrllJmRc1MYhNnGAytbjk3_YMDeOIf4M24TYi-OKdd7IYdOUxZ5R9X', commit: true, currency: 'USD', components: 'buttons', 'disable-funding': ['card', 'credit'] })
+    loadScript({ "client-id": 'sb', commit: true, currency: 'USD', components: 'buttons', 'disable-funding': ['card', 'credit'] })
         .then((paypal) => {
             paypal.Buttons({
             style: {

@@ -17,7 +17,7 @@
 </script>
 
 <main>
-    <SchoolSelector {school} schools={schools} />
+    <SchoolSelector {school} schools={schools} on:schoolChange />
 </main>
 
 <style>

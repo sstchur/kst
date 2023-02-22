@@ -134,10 +134,15 @@
             </thead>
             {#each items as item}
                 <tr>
-                    <td>
-                        <img src={item.images[0]} alt={item.description} height=75 /></td>
+                    <td><img src={item.images[0]} alt={item.description} height=75 /></td>
                     <td class="item">
                         {item.title} - { item.size}
+                        {#if item.customization}
+                            <br> Customization: {item.customization}
+                        {/if}
+                        {#if item.varsity}
+                            <br> Varsity imprint: yes
+                        {/if}
                     </td>
                     <td>{item.quantity}</td>
                     <td class="price">{item.dynamicPrice}</td>

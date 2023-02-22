@@ -6,9 +6,7 @@
 	import { page } from "$app/stores";
 
     export let data;
-    const { products } = data;
-
-    const { school } = $page.params;
+    const { products, school } = data;
     const shoppingCart = createShoppingCart(school);
 
     function addToCart(event) {

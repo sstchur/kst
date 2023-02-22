@@ -17,5 +17,5 @@ export function load({ params }) {
     throw error(404, 'Not found');
   }
 
-  return { products }
+  return { products, school: params.school }
 }

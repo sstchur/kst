@@ -4,7 +4,7 @@
 	import { onMount } from "svelte";
     import { Modals, closeModal } from 'svelte-modals';
 
-    const { school } = $page.params;
+    $: school = $page.data.school;
 
     onMount(() => {
         const kstText = document.getElementById('kstText') as HTMLElement;

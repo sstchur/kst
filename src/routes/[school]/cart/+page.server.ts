@@ -1,6 +1,7 @@
 export const prerender = false;
 
 import * as catalogs from '$lib/assets/catalogs';
+import clientPromise from '$lib/assets/db/mongo';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
@@ -19,11 +20,11 @@ export const load = (({ params }) => {
     }
 
     taxRate = catalog.taxRate;
-    return { taxRate: catalog.taxRate }
+    return { taxRate: catalog.taxRate, school }
 }) satisfies PageServerLoad;
 
 export const actions = {
-    default: async ({ request }) => {
+    confirmorder: async ({ request }) => {
 
         const data = await request.formData();
         const name = data.get('name');
@@ -45,16 +46,14 @@ export const actions = {
             cart: JSON.parse(data.get('cart')?.toString() ?? '')
         }
     
-        // const dbConnection = await clientPromise;
-        // const db = dbConnection.db(school);
-        // const collection = db.collection('girls2023');
+        const dbConnection = await clientPromise;
+        const db = dbConnection.db(school);
+        const collection = db.collection('girls2023');
          
-        // const ins = await collection.insertOne(order, (err, res) => {
-        //     console.log('res', res)
-        // });
+        const ins = await collection.insertOne(order, (err, res) => {
+            console.log('res', res)
+        });
     
-        //return { success: true, orderId: ins.insertedId.toString() };
-
-        return { success: true, orderid: 12345, order };
+        return { success: true, orderId: ins.insertedId.toString() };
     }        
 };

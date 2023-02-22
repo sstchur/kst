@@ -4,6 +4,7 @@
 	import { cartItems, cartSubtotal, createShoppingCart } from "./shoppingCart";
     import * as catalogs from '$lib/assets/catalogs';
     import { loadScript } from "@paypal/paypal-js";
+    import type { PurchaseUnit, AmountWithBreakdown, PurchaseItem } from '@paypal/paypal-js';
 
     const { school } = $page.params;
     const { payPalEnabled } = catalogs[school];
@@ -24,9 +25,40 @@
 
     $: payPalFee = payPalEnabled ? ($cartSubtotal * 3.49/100 + 0.49).toFixed(2) : 0;
 
-    $: purchaseUnits = $cartItems.map((p, i) => ({ reference_id: `item-${i+1} (${p.id})`, description: `PRODUCT: ${p.title}, SIZE: ${p.size}, PRICE: ${p.price}, QTY: ${p.quantity}`, amount: { value: `${p.price * p.quantity}`, currency_code: 'USD', tax: { value: salesTax, currency_code: 'USD' } } }));
-
     $: grandTotal = Number($cartSubtotal) + Number(salesTax) + Number(payPalFee);
+
+    const currency_code = 'USD';
+    $: purchaseUnits = {
+        description: 'Tennis spirit wear',
+        soft_descriptor: 'Kick Serve Tennis',
+        amount: {
+            currency_code,
+            value: grandTotal.toFixed(2),
+            breakdown: {
+                item_total: {
+                    currency_code,
+                    value: $cartSubtotal.toFixed(2)
+                },
+                tax_total: {
+                    currency_code,
+                    value: `${salesTax}`
+                },
+                handling: {
+                    currency_code,
+                    value: `${payPalFee}`
+                }
+            }
+        },
+        items: $cartItems.map((p, i) => ({
+            name: p.title,
+            description: `SIZE: ${p.size},  CUSTOMIZATION: ${p.customization}, VARSITY: ${p.varsity}`,
+            unit_amount: {
+                currency_code,
+                value: `${p.price}`
+            },
+            quantity: `${p.quantity}`
+        }))
+    }
 
     function removeItem(item: ProductInstance) {
         const i = $cartItems.indexOf(item);
@@ -34,6 +66,11 @@
         items = items;
     }
 
+    let payPalSucceeded = false;
+    let payPalTxnStatus = '';
+    let payPalTxnId = '';
+
+    // AZ6KxIlNEhfWChYzGXiJtfMZOrkrllJmRc1MYhNnGAytbjk3_YMDeOIf4M24TYi-OKdd7IYdOUxZ5R9X
     loadScript({ "client-id": 'sb', 'buyer-country': 'US', commit: true, currency: 'USD', components: 'buttons', 'disable-funding': ['card', 'credit'] })
         .then((paypal) => {
             paypal.Buttons({
@@ -44,117 +81,129 @@
 
 			// Sets up the transaction when a payment button is clicked
 			createOrder: (data, actions) => {
-                console.log(data);
-			return actions.order.create({
-				purchase_units: purchaseUnits
-			});
+                console.log('UNITS:', purchaseUnits)
+			    return actions.order.create({
+				    purchase_units: [ purchaseUnits ]
+			    });
 			},
 			// Finalize the transaction after payer approval
 			onApprove: (data, actions) => {
+
                 return actions.order.capture().then(function(orderData) {
                     // Successful capture! For dev/demo purposes:
                     console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
                     const transaction = orderData.purchase_units[0].payments.captures[0];
-                    alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
-                    // When ready to go live, remove the alert and show a success message within this page. For example:
-                    // const element = document.getElementById('paypal-button-container');
-                    // element.innerHTML = '<h3>Thank you for your payment!</h3>';
-                    // Or go to another URL:  actions.redirect('thank_you.html');
+                    payPalSucceeded = true;
+                    payPalTxnStatus = transaction.status as unknown as any;
+                    payPalTxnId = transaction.id as unknown as any;
+                    
+                    createShoppingCart(school).clear();
                 });
-                }
+            }
             }).render('#paypal-button-container');
         })
         .catch((err) => {
             console.error("failed to load the PayPal JS SDK script", err);
-        });    
-
-
+        });
 </script>
 
 <main>
-    <a href="/{school}/order">Back to order form</a>
+    {#if payPalSucceeded }
+        <h2>Thank you for your order.</h2>
+        <h3>Your PayPal transaction ID is {payPalTxnId}</h3>
+        <p>If you have questions about your order, or would like to make a change,
+           email <a style="display: inline" href="mailto:info@kickserve.biz">info@kickserve.biz</a> and include the Transaction ID.</p>
+    {:else}
+        <a href="/{school}/order">Back to order form</a>
 
-    <table>
-        <thead>
-            <tr>
-                <th></th>
-                <th>Items</th>
-                <th>Qty</th>
-                <th>Price</th>
-                <th>Amount</th>
-            </tr>
-        </thead>
-        {#each items as item}
-            <tr>
-                <td>
-                    <img src={item.images[0]} alt={item.description} height=75 /></td>
-                <td class="item">
-                    {item.title} - { item.size}
-                </td>
-                <td>{item.quantity}</td>
-                <td class="price">{item.price}</td>
-                <td class="amount">${(item.price * item.quantity).toFixed(2)}</td>
-            </tr>
-            {#if !readonly}
+        <table>
+            <thead>
                 <tr>
-                    <td colspan=5>
-                        <button class="link" on:click|preventDefault={() => removeItem(item)}>Remove</button>
-                    </td>
+                    <th></th>
+                    <th>Items</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th>Amount</th>
                 </tr>
-            {/if}
-        {/each}
+            </thead>
+            {#each items as item}
+                <tr>
+                    <td>
+                        <img src={item.images[0]} alt={item.description} height=75 /></td>
+                    <td class="item">
+                        {item.title} - { item.size}
+                    </td>
+                    <td>{item.quantity}</td>
+                    <td class="price">{item.price}</td>
+                    <td class="amount">${(item.price * item.quantity).toFixed(2)}</td>
+                </tr>
+                {#if !readonly}
+                    <tr>
+                        <td colspan=5>
+                            <button class="link" on:click|preventDefault={() => removeItem(item)}>Remove</button>
+                        </td>
+                    </tr>
+                {/if}
+            {/each}
 
-        <tfoot>
-            <tr>
-                <td colspan=4 class="price">Subtotal</td>
-                <td class="amount">${$cartSubtotal}</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td colspan=4 class="price">Sales tax</td>
-                <td class="amount">${salesTax}</td>
-                <td></td>
-            </tr>
+            {#if $cartItems.length > 0}
+                <tfoot>
+                    <tr>
+                        <td colspan=4 class="price">Subtotal</td>
+                        <td class="amount">${$cartSubtotal}</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan=4 class="price">Sales tax</td>
+                        <td class="amount">${salesTax}</td>
+                        <td></td>
+                    </tr>
+                    {#if payPalEnabled}
+                    <tr>
+                        <td colspan=4 class="price">Paypal fee</td>
+                        <td class="amount">${payPalFee}</td>
+                        <td></td>
+                    </tr>
+                    {/if}
+                    <tr>
+                        <td colspan=4 class="price">Grand total</td>
+                        <td class="amount">${grandTotal.toFixed(2)}</td>
+                        <td></td>
+                    </tr>                      
+                </tfoot>
+            {/if}
+        </table>
+
+        {#if $cartItems.length > 0}
+            <div class="payment">
             {#if payPalEnabled}
-            <tr>
-                <td colspan=4 class="price">Paypal fee</td>
-                <td class="amount">${payPalFee}</td>
-                <td></td>
-            </tr>
-            {/if}
-            <tr>
-                <td colspan=4 class="price">Grand total</td>
-                <td class="amount">${grandTotal.toFixed(2)}</td>
-                <td></td>
-            </tr>                      
-        </tfoot>
-    </table>
-
-    <div class="payment">
-        {#if payPalEnabled}
-            <div id="paypal-button-container"></div>
-        {:else}
-            {#if readonly}
-                This order cannot be modified, but you can delete this order or place an additional order, if desired.
-                <input name="name" type="text" placeholder="Email" />
-                <input name="code" type="number" placeholder="6 digit school code" />
-                <button>Delete this order</button>
+                <div id="paypal-button-container"></div>
             {:else}
-                {#if $page.form?.success}
-                    <strong>Order submitted successfully</strong>
+                {#if readonly}
+                    This order cannot be modified, but you can delete this order or place an additional order, if desired.
+                    <input name="name" type="text" placeholder="Email" />
+                    <input name="code" type="number" placeholder="6 digit school code" />
+                    <button>Delete this order</button>
                 {:else}
-                    <form method="post" action="?/confirmorder">
-                        <input bind:value={name} name="name" type="text" placeholder="Name" />
-                        <input bind:value={email} name="email" type="email" placeholder="Email" />
-                        <input bind:value={code} name="code" type="number" placeholder="6 digit school code" />
-                        <input value={$page.params.school} name="school" type="hidden" />
-                        <input value={JSON.stringify(items)} name="cart" type="hidden" />
-                        <button type="submit" disabled={!isFormValid}>Confirm order</button>
-                    </form>
+                    {#if $page.form?.success}
+                        <strong>Order submitted successfully</strong>
+                    {:else}
+                        <form method="post" action="?/confirmorder">
+                            <input bind:value={name} name="name" type="text" placeholder="Name" />
+                            <input bind:value={email} name="email" type="email" placeholder="Email" />
+                            <input bind:value={code} name="code" type="number" placeholder="6 digit school code" />
+                            <input value={$page.params.school} name="school" type="hidden" />
+                            <input value={JSON.stringify(items)} name="cart" type="hidden" />
+                            <button type="submit" disabled={!isFormValid}>Confirm order</button>
+                        </form>
+                    {/if}
                 {/if}
             {/if}
+            </div>
+        {:else}
+            <p>Your cart is empty</p>
         {/if}
-    </div>    
+    {/if}    
 </main>
 
 <style>

@@ -7,7 +7,7 @@ export let items: ProductInstance[] = [];
 export const cartItems = writable(items);
 export const cartCount = derived(cartItems, $itemsStore => $itemsStore.length);
 export const cartSubtotal = derived(cartItems, $itemsStore => $itemsStore.reduce((total, productInstance) => 
-        Math.round(total + (productInstance.quantity * productInstance.price)*100/100), 0));
+        Number((total + (productInstance.quantity * productInstance.price)).toFixed(2)), 0));
 
 export const orderId = writable<string|undefined>(undefined);
 

@@ -9,12 +9,15 @@
     let quantity: number;
     let customization = '';
     let varsity = false;
+
+    $: isXXL = size === '2X-Large' || size === '3X-Large' || size === '4X-Large';
+    $: dynamicPrice = product.price + (isXXL ? 2 : 0);
   
     const dispatch = createEventDispatcher();
   
     function dispatchAddToCart(product: Product) {
       return function() {
-        const productInstance = { ...product, size, quantity, customization, varsity };
+        const productInstance = { ...product, size, quantity, customization, varsity, price: dynamicPrice };
         dispatch('addToCart', { product, productInstance });
         reset();
       }
@@ -113,6 +116,11 @@
     .productDetails .desc {
       font-size: small;
     }
+
+    strong {
+        color: green;
+        font-size: 1.25em;
+    }
   
   </style>
   
@@ -129,6 +137,8 @@
         </span>
 
         <p class="desc">{product.description}</p>
+
+        <strong class="price">${dynamicPrice}</strong>
 
         <div class="options">
         <div>            

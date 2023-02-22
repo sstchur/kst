@@ -5,6 +5,8 @@ export const closeDate = writable();
 let close_date = new Date;
 closeDate.subscribe(val => close_date = val);
 
+export const shortCloseDate = derived(closeDate, $closeDate => close_date?.toLocaleDateString());
+
 const remainingTime = readable(close_date?.getTime() - new Date().getTime(), function start(set) {
     const interval = setInterval(() => {
       set(close_date?.getTime() - new Date().getTime());

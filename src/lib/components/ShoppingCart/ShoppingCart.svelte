@@ -21,11 +21,17 @@
     
     $: isFormValid = code && name && email;
 
-    $: salesTax = (Number($cartSubtotal) * taxRate).toFixed(2);
+    let subtotal: string;
+    $: subtotal = $cartSubtotal.toFixed(2);
 
-    $: payPalFee = payPalEnabled ? ($cartSubtotal * 3.49/100 + 0.49).toFixed(2) : 0;
+    let salesTax: string;
+    $: salesTax = ($cartSubtotal * taxRate).toFixed(2);
 
-    $: grandTotal = Number($cartSubtotal) + Number(salesTax) + Number(payPalFee);
+    let payPalFee: string;
+    $: payPalFee = payPalEnabled ? ($cartSubtotal * 3.49/100 + 0.49).toFixed(2) : '0.00';
+
+    let grandTotal: number;
+    $: grandTotal = $cartSubtotal + Number(salesTax) + Number(payPalFee);
 
     const currency_code = 'USD';
     $: purchaseUnits = {
@@ -37,7 +43,7 @@
             breakdown: {
                 item_total: {
                     currency_code,
-                    value: $cartSubtotal.toFixed(2)
+                    value: subtotal
                 },
                 tax_total: {
                     currency_code,
@@ -50,11 +56,11 @@
             }
         },
         items: $cartItems.map((p, i) => ({
-            name: `${p.title} - SIZE: ${p.size}, CUSTOMIZATION: ${p.customization || 'N/A'}, VARSITY: ${p.varsity || 'N/A'}`,
+            name: `(${p.id}) ${p.title} - SIZE: ${p.size}, CUSTOMIZATION: ${p.customization || 'N/A'}, VARSITY: ${p.varsity || 'N/A'}`,
             description: `SIZE: ${p.size}, CUSTOMIZATION: ${p.customization || 'N/A'}, VARSITY: ${p.varsity || 'N/A'}`,
             unit_amount: {
                 currency_code,
-                value: `${p.price}`
+                value: `${p.dynamicPrice}`
             },
             quantity: `${p.quantity}`
         }))
@@ -134,8 +140,8 @@
                         {item.title} - { item.size}
                     </td>
                     <td>{item.quantity}</td>
-                    <td class="price">{item.price}</td>
-                    <td class="amount">${(item.price * item.quantity).toFixed(2)}</td>
+                    <td class="price">{item.dynamicPrice}</td>
+                    <td class="amount">${(item.dynamicPrice * item.quantity).toFixed(2)}</td>
                 </tr>
                 {#if !readonly}
                     <tr>
@@ -150,7 +156,7 @@
                 <tfoot>
                     <tr>
                         <td colspan=4 class="price">Subtotal</td>
-                        <td class="amount">${$cartSubtotal}</td>
+                        <td class="amount">${subtotal}</td>
                         <td></td>
                     </tr>
                     <tr>
@@ -192,6 +198,9 @@
                             <input bind:value={name} name="name" type="text" placeholder="Name" />
                             <input bind:value={email} name="email" type="email" placeholder="Email" />
                             <input bind:value={code} name="code" type="number" placeholder="6 digit school code" />
+                            <input bind:value={subtotal} name="subtotal" type="hidden" />
+                            <input bind:value={salesTax} name="salesTax" type="hidden" />
+                            <input bind:value={grandTotal} name="grandTotal" type="hidden" />
                             <input value={$page.params.school} name="school" type="hidden" />
                             <input value={JSON.stringify(items)} name="cart" type="hidden" />
                             <button type="submit" disabled={!isFormValid}>Confirm order</button>

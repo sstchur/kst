@@ -20,12 +20,20 @@
 
 </script>
 
-{#if !$closed}
-    {#if form?.success}
-        <p>Order received. Your Order ID is <a href="/{school}/order/{form?.orderId}">{form?.orderId}</a>.
-        Save this link. You'll need it if you want to delete your order.</p>
+<main>
+    {#if !$closed}
+        {#if form?.success}
+            <p>Order received. Your Order ID is <a href="/{school}/order/{form?.orderId}">{form?.orderId}</a>.
+            Save this link. You'll need it if you want to delete your order.</p>
 
-    {:else}
-        <ShoppingCart taxRate={taxRate} />
+        {:else}
+            <ShoppingCart taxRate={taxRate} />
+        {/if}
     {/if}
-{/if}
+</main>
+
+<style>
+    main {
+        margin: 0 2em;
+    }
+</style>

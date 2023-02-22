@@ -50,6 +50,7 @@ export const collection = 'girls2023';
 import logo2023 from '$lib/assets/eastlake/img/logo2023.png';
 export const logo = logo2023;
 export const taxRate = 0.087;
+export const markup = 0;
 export const payPalEnabled = true;
 export const closeDate = new Date(2023, 2, 1, 23, 59, 59);
 export const products: Product[] = [

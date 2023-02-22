@@ -19,32 +19,34 @@ export const products: Product[] = [
         title: 'Port & Company Ladies Tee',
         description: 'Classic tee, 100% cotton, side seamed with a contoured body for a feminine fit',
         images: [lpc54Front, lpc54Back],
-        customizable: true,
-        price: 50.00
+        customizable: 8.00,
+        price: 13.50
     },
     {
         id: 'lst350',
         title: 'Sport-Tek Tee',
         description: 'Lightweight, moisture-wicking, 100% polyester',
         images: [lst350Front, lst350Back],
-        customizable: true,
-        price: 37.42
+        customizable: 8.00,
+        price: 17.00
     },
     {
         id: 'lst356',
-        title: 'LST356',
+        title: 'Sport-Tek Racerback Tank',
+        description: '100% polyester interlock with PosiCharge technology',
         images: [lst356Front, lst356Back],
-        customizable: true,
-        price: 132.45,
+        customizable: 8.00,
+        price: 17.00,
     },
     {
         id: 'pc78q',
-        title: 'PC78Q',
+        title: 'Port & Company 1/4 Zip Pullover',
+        description: 'A cozy 1/4 zip in 50/50 poly/cotton fleece',
         images: [pc78qFront, pc78qBack],
-        customizable: true,
-        varsityEnabled: true,
+        customizable: 8.00,
+        varsityEnabled: 7.00,
         restrictedSizes: new Set(['X-Small']),
-        price: 132.45,
+        price: 26.50,
     }
 ];
 
@@ -54,5 +56,6 @@ export const collection = 'girls2023';
 import logo2023 from '$lib/assets/skyline/img/logo2023.png';
 export const logo = logo2023;
 export const taxRate = 0.101;
+export const markup = 5.00;
 export const payPalEnabled = false;
 export const closeDate = new Date(2023, 2, 1, 0, 0, 0);

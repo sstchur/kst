@@ -12,6 +12,7 @@
     const shoppingCart = createShoppingCart(school);
 
     $closeDate = catalogs[school].closeDate;
+    const markup = catalogs[school].markup;
 
     function addToCart(event) {
         const { productInstance } = event.detail;
@@ -25,7 +26,7 @@
     <div style="display: flex; flex-wrap: wrap; justify-content: center">
         {#each products as product}
             <div class="product">
-                <ProductDetails {product} on:addToCart={addToCart} />
+                <ProductDetails {product} {markup} on:addToCart={addToCart} />
             </div>
         {/each}
     </div>

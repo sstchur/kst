@@ -1,9 +1,10 @@
 <script lang="ts">
 
     import { createEventDispatcher } from 'svelte';
-    import { Sizes, type Product, type Size } from '$lib/types/ProductTypes';
+    import { Sizes, type Product, type ProductInstance, type Size } from '$lib/types/ProductTypes';
   
     export let product: Product;
+    export let markup: number;
   
     let size: Size;
     let quantity: number;
@@ -11,13 +12,20 @@
     let varsity = false;
 
     $: isXXL = size === '2X-Large' || size === '3X-Large' || size === '4X-Large';
-    $: dynamicPrice = Number((product.price + (isXXL ? 2 : 0)).toFixed(2));
+    $: dynamicPrice = Number(calcPrice(product, isXXL, markup)).toFixed(2);
   
+    $: calcPrice = (product: Product, isXXL: boolean, markup: number) => {
+        const extraLargeCharge = isXXL ? 2 : 0;
+        const nameCharge = customization ? product.customizable ?? 0 : 0;
+        const varsityCharge = varsity ? product.varsityEnabled ?? 0 : 0;
+        return product.price + markup + extraLargeCharge + nameCharge + varsityCharge;  
+    }
+
     const dispatch = createEventDispatcher();
   
     function dispatchAddToCart(product: Product) {
       return function() {
-        const productInstance = { ...product, size, quantity, customization, varsity, price: dynamicPrice };
+        const productInstance = { ...product, size, quantity, customization, varsity, dynamicPrice };
         dispatch('addToCart', { product, productInstance });
         reset();
       }

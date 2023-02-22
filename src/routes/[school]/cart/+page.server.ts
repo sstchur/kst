@@ -4,6 +4,7 @@ import * as catalogs from '$lib/assets/catalogs';
 import clientPromise from '$lib/assets/db/mongo';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import sgMail from '@sendgrid/mail';
 
 const schoolCodes = new Map<string, number>([
 	['eastlake', 123456 ],
@@ -11,6 +12,13 @@ const schoolCodes = new Map<string, number>([
 ]);
 
 let taxRate: number;
+
+type Order = {
+    name: string,
+    email: string,
+    school: string,
+    cart: any
+};
 
 export const load = (({ params }) => {
     const { school } = params;
@@ -31,11 +39,11 @@ export const actions = {
         const email = data.get('email');
         const code = Number(data.get('code')?.valueOf());
         const school = data.get('school')?.toString() ?? '';
-    
-        console.log('CODE AND SCHOOL');
-        console.log(code, school);
-        console.log(schoolCodes.has(school), typeof schoolCodes.get(school), typeof code)
-    
+
+        const subtotal = data.get('subtotal')?.toString() ?? '';
+        const salesTax = data.get('salesTax')?.toString() ?? '';
+        const grandTotal = data.get('grandTotal')?.toString() ?? '';
+        
         if (!schoolCodes.has(school) || schoolCodes.get(school) !== code) {
              throw error(403, 'Invalid school code')
         }
@@ -43,6 +51,10 @@ export const actions = {
         const order = { 
             name,
             email,
+            school,
+            subtotal,
+            salesTax,
+            grandTotal,
             cart: JSON.parse(data.get('cart')?.toString() ?? '')
         }
     
@@ -53,7 +65,37 @@ export const actions = {
         const ins = await collection.insertOne(order, (err, res) => {
             console.log('res', res)
         });
+
+        const orderId = ins.insertedId.toString();
+        sendConfirmationEmail(orderId, order);
     
-        return { success: true, orderId: ins.insertedId.toString() };
+        return { success: true, orderId };
     }        
 };
+
+
+function sendConfirmationEmail(orderId: string, order: Order) {
+    const { school } = order;
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    const msg = {
+        to: order.email,
+        from: 'info@kickserve.biz',
+        subject: `Your Kick Serve Tennis Order (${orderId})`,
+        text:
+`Thank you your order.
+Your order number is ${orderId}. You can review your order with this link: https://kickserve.vercel.app/${school}/order/${orderId}
+
+You cannot modify your order, but if your school's form has not yet closed, you can delete it and/or place a new/additional order if desired.
+No payment is required at this time. Your school will contact you about how to pay for the items you've requested for purchase.
+`,
+    };
+
+    sgMail.send(msg)
+        .then(() => {
+            console.log('Email sent!');
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+
+}

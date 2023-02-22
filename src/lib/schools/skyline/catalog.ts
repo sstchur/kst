@@ -43,6 +43,7 @@ export const products: Product[] = [
         images: [pc78qFront, pc78qBack],
         customizable: true,
         varsityEnabled: true,
+        restrictedSizes: new Set(['X-Small']),
         price: 132.45,
     }
 ];

@@ -11,7 +11,7 @@
     let varsity = false;
 
     $: isXXL = size === '2X-Large' || size === '3X-Large' || size === '4X-Large';
-    $: dynamicPrice = product.price + (isXXL ? 2 : 0);
+    $: dynamicPrice = Number((product.price + (isXXL ? 2 : 0)).toFixed(2));
   
     const dispatch = createEventDispatcher();
   

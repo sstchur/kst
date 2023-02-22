@@ -14,7 +14,7 @@
     function addToCart(event) {
         const { productInstance } = event.detail;
         shoppingCart.add(productInstance);
-        openModal(ItemAddedModal, { product: productInstance });
+        openModal(ItemAddedModal, { product: productInstance, school });
     }
 
 </script>

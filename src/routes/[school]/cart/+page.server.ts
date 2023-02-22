@@ -4,7 +4,7 @@ import * as catalogs from '$lib/assets/catalogs';
 import clientPromise from '$lib/assets/db/mongo';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import sgMail from '@sendgrid/mail';
+import sgMail, { type MailDataRequired } from '@sendgrid/mail';
 
 const schoolCodes = new Map<string, number>([
 	['eastlake', 123456 ],
@@ -17,6 +17,9 @@ type Order = {
     name: string,
     email: string,
     school: string,
+    subtotal: string,
+    salesTax: string,
+    grandTotal: string,
     cart: any
 };
 
@@ -77,9 +80,10 @@ export const actions = {
 function sendConfirmationEmail(orderId: string, order: Order) {
     const { school } = order;
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-    const msg = {
+    const msg: MailDataRequired = {
         to: order.email,
         from: 'info@kickserve.biz',
+        bcc: 'info@kickserve.biz',
         subject: `Your Kick Serve Tennis Order (${orderId})`,
         text:
 `Thank you your order.
@@ -87,6 +91,13 @@ Your order number is ${orderId}. You can review your order with this link: https
 
 You cannot modify your order, but if your school's form has not yet closed, you can delete it and/or place a new/additional order if desired.
 No payment is required at this time. Your school will contact you about how to pay for the items you've requested for purchase.
+
+Order quick summary:
+${order.name}
+${order.email}
+subtotal: $${order.subtotal}
+sales tax: $${order.salesTax}
+grand total: ${order.grandTotal}
 `,
     };
 

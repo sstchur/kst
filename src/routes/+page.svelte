@@ -9,15 +9,13 @@
         schools.push({ key, name: catalogs[key].schoolName });
     }
 
-    console.log(schools);
-
     export function load() {
         return { school }
     }
 </script>
 
 <main>
-    <SchoolSelector {school} schools={schools} on:schoolChange />
+    <SchoolSelector {school} schools={schools} />
 </main>
 
 <style>

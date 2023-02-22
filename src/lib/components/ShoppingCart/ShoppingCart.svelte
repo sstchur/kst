@@ -4,7 +4,6 @@
 	import { cartItems, cartSubtotal, createShoppingCart } from "./shoppingCart";
     import * as catalogs from '$lib/assets/catalogs';
     import { loadScript } from "@paypal/paypal-js";
-    import type { PurchaseUnit, AmountWithBreakdown, PurchaseItem } from '@paypal/paypal-js';
 
     const { school } = $page.params;
     const { payPalEnabled } = catalogs[school];
@@ -14,6 +13,7 @@
     export let taxRate: number;
     export let readonly: boolean = false;
     export let items: ProductInstance[] = $cartItems;
+    export let order = null;
 
     let name = '';
     let email = '';
@@ -30,8 +30,8 @@
     let payPalFee: string;
     $: payPalFee = payPalEnabled ? ($cartSubtotal * 3.49/100 + 0.49).toFixed(2) : '0.00';
 
-    let grandTotal: number;
-    $: grandTotal = $cartSubtotal + Number(salesTax) + Number(payPalFee);
+    let grandTotal: string;
+    $: grandTotal = ($cartSubtotal + Number(salesTax) + Number(payPalFee)).toFixed(2);
 
     const currency_code = 'USD';
     $: purchaseUnits = {
@@ -39,7 +39,7 @@
         soft_descriptor: 'Kick Serve Tennis',
         amount: {
             currency_code,
-            value: grandTotal.toFixed(2),
+            value: grandTotal,
             breakdown: {
                 item_total: {
                     currency_code,
@@ -157,16 +157,16 @@
                 {/if}
             {/each}
 
-            {#if $cartItems.length > 0}
+            {#if items.length > 0}
                 <tfoot>
                     <tr>
                         <td colspan=4 class="price">Subtotal</td>
-                        <td class="amount">${subtotal}</td>
+                        <td class="amount">${order ? order.subtotal : subtotal}</td>
                         <td></td>
                     </tr>
                     <tr>
                         <td colspan=4 class="price">Sales tax</td>
-                        <td class="amount">${salesTax}</td>
+                        <td class="amount">${order ? order.salesTax : salesTax}</td>
                         <td></td>
                     </tr>
                     {#if payPalEnabled}
@@ -178,14 +178,14 @@
                     {/if}
                     <tr>
                         <td colspan=4 class="price">Grand total</td>
-                        <td class="amount">${grandTotal.toFixed(2)}</td>
+                        <td class="amount">${order ? order.grandTotal : grandTotal}</td>
                         <td></td>
                     </tr>                      
                 </tfoot>
             {/if}
         </table>
 
-        {#if $cartItems.length > 0}
+        {#if items.length > 0}
             <div class="payment">
             {#if payPalEnabled}
                 <div id="paypal-button-container"></div>
@@ -206,6 +206,7 @@
                             <input bind:value={subtotal} name="subtotal" type="hidden" />
                             <input bind:value={salesTax} name="salesTax" type="hidden" />
                             <input bind:value={grandTotal} name="grandTotal" type="hidden" />
+                            <input value={new Date()} name="orderDate" type="hidden" />
                             <input value={$page.params.school} name="school" type="hidden" />
                             <input value={JSON.stringify(items)} name="cart" type="hidden" />
                             <button type="submit" disabled={!isFormValid}>Confirm order</button>

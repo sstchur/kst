@@ -1,7 +1,7 @@
 export const prerender = false;
 
 import * as catalogs from '$lib/assets/catalogs';
-import clientPromise from '$lib/assets/db/mongo';
+import clientPromise from '$lib/db/mongo';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import sgMail, { type MailDataRequired } from '@sendgrid/mail';
@@ -42,6 +42,7 @@ export const actions = {
         const email = data.get('email');
         const code = Number(data.get('code')?.valueOf());
         const school = data.get('school')?.toString() ?? '';
+        const orderDate = data.get('orderDate')?.toString() ?? '';
 
         const subtotal = data.get('subtotal')?.toString() ?? '';
         const salesTax = data.get('salesTax')?.toString() ?? '';
@@ -54,6 +55,7 @@ export const actions = {
         const order = { 
             name,
             email,
+            orderDate,
             school,
             subtotal,
             salesTax,

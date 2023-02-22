@@ -15,7 +15,6 @@
     function dispatchAddToCart(product: Product) {
       return function() {
         const productInstance = { ...product, size, quantity, customization, varsity };
-        console.log('dispatching...', product, productInstance)
         dispatch('addToCart', { product, productInstance });
         reset();
       }

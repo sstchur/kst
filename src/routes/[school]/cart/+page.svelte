@@ -18,6 +18,12 @@
 {#if form?.success}
     <p>Order received. Your Order ID is <a href="/{school}/order/{form?.orderId}">{form?.orderId}</a>.
     Save this link. You'll need it if you want to delete your order.</p>
+
+    <pre>
+        {form?.order.name}
+        {form?.order.email}
+        {JSON.stringify(form?.order.cart)}
+    </pre>
 {:else}
     <form method="post">
         <ShoppingCart taxRate={taxRate} />

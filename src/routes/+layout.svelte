@@ -3,8 +3,42 @@
 	import { cartCount } from "$lib/components/ShoppingCart/shoppingCart";
 	import { onMount } from "svelte";
     import { Modals, closeModal } from 'svelte-modals';
+    import Timer from '$lib/components/Timer/Timer.svelte';
+	import { readable } from "svelte/store";
+    import * as catalogs from '$lib/assets/catalogs';
 
     $: school = $page.data.school;
+
+    export let data;
+    let { title } = data;
+
+    let time: number = 0;
+    data.timeLeft?.subscribe(val => time = val);
+
+      // const school = params.school ?? undefined;
+    const catalog = catalogs[school];
+    $: closeDate = catalog?.closeDate ?? -1;
+    
+    const timeLeft = readable(closeDate - new Date().getTime(), function start(set) {
+        const interval = setInterval(() => {
+            set(closeDate - new Date().getTime());
+        }, 1000);
+    
+        return function stop() {
+            clearInterval(interval);
+        };
+    });
+    
+    // if (!catalog) {
+    //     return { title: undefined };
+    // }
+
+
+    //$: timeLeft = time/1000/60/60/24;
+    $: daysLeft = (timeLeft);
+    $: hoursLeft = ((timeLeft - ~~daysLeft) * 24)
+    $: minLeft = ((hoursLeft - ~~hoursLeft) * 60);
+    $: secLeft = ((minLeft - ~~minLeft) * 60);
 
     onMount(() => {
         const kstText = document.getElementById('kstText') as HTMLElement;
@@ -33,7 +67,19 @@
 
 <a href="/"><img id="kstLogo" src="https://kickserve.biz/kstlogo.png" alt="Kick Serve Tennis logo" height=150/></a>
 
-<slot></slot>
+<!-- <Timer {school} /> -->
+
+{#if time < 0}
+    <h2>Order form closed</h2>
+{:else}
+    <h2>Form closes in {~~daysLeft}D:{~~hoursLeft}H:{~~minLeft}M:{~~secLeft.toFixed(2)}S</h2>
+
+    {#if title}
+        <h1>{title}</h1>
+    {/if}
+
+    <slot></slot>
+{/if}
 
 <Modals>
     <div slot="backdrop" class="backdrop" on:click={closeModal}></div>

@@ -48,11 +48,11 @@ export const products: Product[] = [
     }
 ];
 
-export const db = 'skyline';
+export const title = 'Skyline Girls 2023 Tennis Apparel';
+export const schoolName = 'Skyline High School';
 export const collection = 'girls2023';
 import logo2023 from '$lib/assets/skyline/img/logo2023.png';
 export const logo = logo2023;
-export const title = 'Skyline Girls 2023 Tennis Apparel';
 export const taxRate = 0.101;
 export const payPalEnabled = false;
 export const closeDate = new Date(2023, 1, 23, 0, 0, 0);

@@ -3,6 +3,7 @@
 	import type { ProductInstance } from "$lib/types/ProductTypes";
 	import { cartItems, cartSubtotal, createShoppingCart } from "./shoppingCart";
     import * as catalogs from '$lib/assets/catalogs';
+    import { loadScript } from "@paypal/paypal-js";
 
     const { school } = $page.params;
     const { payPalEnabled } = catalogs[school];
@@ -31,7 +32,42 @@
         const i = $cartItems.indexOf(item);
         shoppingCart.remove(i);
         items = items;
-    }    
+    }
+
+    loadScript({ "client-id": 'sb', 'buyer-country': 'US', commit: true, currency: 'USD', components: 'buttons', 'disable-funding': ['card', 'credit'] })
+        .then((paypal) => {
+            paypal.Buttons({
+            style: {
+                color: 'silver',
+                shape: 'pill'
+            },
+
+			// Sets up the transaction when a payment button is clicked
+			createOrder: (data, actions) => {
+                console.log(data);
+			return actions.order.create({
+				purchase_units: purchaseUnits
+			});
+			},
+			// Finalize the transaction after payer approval
+			onApprove: (data, actions) => {
+                return actions.order.capture().then(function(orderData) {
+                    // Successful capture! For dev/demo purposes:
+                    console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                    const transaction = orderData.purchase_units[0].payments.captures[0];
+                    alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+                    // When ready to go live, remove the alert and show a success message within this page. For example:
+                    // const element = document.getElementById('paypal-button-container');
+                    // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                    // Or go to another URL:  actions.redirect('thank_you.html');
+                });
+                }
+            }).render('#paypal-button-container');
+        })
+        .catch((err) => {
+            console.error("failed to load the PayPal JS SDK script", err);
+        });    
+
 
 </script>
 

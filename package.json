@@ -34,6 +34,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@paypal/paypal-js": "^5.1.4",
 		"dotenv": "^16.0.3",
 		"mongodb": "^5.0.1",
 		"svelte-modals": "^1.2.1"

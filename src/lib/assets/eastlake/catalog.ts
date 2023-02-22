@@ -45,6 +45,8 @@ const lst254: Product = {
 
 
 export const title = 'Eastlake Girls 2023 Tennis Apparel';
+export const schoolName = 'Eastlake High School';
+export const collection = 'girls2023';
 import logo2023 from '$lib/assets/eastlake/img/logo2023.png';
 export const logo = logo2023;
 export const taxRate = 0.087;

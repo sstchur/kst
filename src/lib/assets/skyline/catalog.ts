@@ -1,16 +1,16 @@
-import type { Product } from "$lib/product";
+import type { Product } from "$lib/types/ProductTypes";
 
-import lpc54Front from '$lib/assets/skyline/lpc54front.png';
-import lpc54Back from '$lib/assets/skyline/lpc54back.png';
+import lpc54Front from '$lib/assets/skyline/img/lpc54front.png';
+import lpc54Back from '$lib/assets/skyline/img/lpc54back.png';
 
-import lst350Front from '$lib/assets/skyline/lst350front.png';
-import lst350Back from '$lib/assets/skyline/lst350back.png';
+import lst350Front from '$lib/assets/skyline/img/lst350front.png';
+import lst350Back from '$lib/assets/skyline/img/lst350back.png';
 
-import lst356Front from '$lib/assets/skyline/lst356front.png';
-import lst356Back from '$lib/assets/skyline/lst356back.png';
+import lst356Front from '$lib/assets/skyline/img/lst356front.png';
+import lst356Back from '$lib/assets/skyline/img/lst356back.png';
 
-import pc78qFront from '$lib/assets/skyline/pc78qfront.png';
-import pc78qBack from '$lib/assets/skyline/pc78qback.png';
+import pc78qFront from '$lib/assets/skyline/img/pc78qfront.png';
+import pc78qBack from '$lib/assets/skyline/img/pc78qback.png';
 
 
 export const products: Product[] = [
@@ -50,7 +50,7 @@ export const products: Product[] = [
 
 export const db = 'skyline';
 export const collection = 'girls2023';
-import logo2023 from '$lib/assets/skyline/logo2023.png';
+import logo2023 from '$lib/assets/skyline/img/logo2023.png';
 export const logo = logo2023;
 export const title = 'Skyline Girls 2023 Tennis Apparel';
 export const taxRate = 0.101;

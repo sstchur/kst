@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
 
-import { products as eastlake } from '$lib/schools/eastlake/catalog';
-import { products as skyline } from '$lib/schools/skyline/catalog';
+import { products as eastlake } from '$lib/assets/eastlake/catalog';
+import { products as skyline } from '$lib/assets/skyline/catalog';
 
 export const prerender = 'auto';
 

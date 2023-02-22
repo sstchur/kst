@@ -1,16 +1,16 @@
 import type { Product } from "$lib/product";
 
-import lst350Front from '$lib/assets/eastlake/lst350front.png';
-import lst350Back from '$lib/assets/eastlake/lst350back.png';
+import lst350Front from '$lib/assets/eastlake/img/lst350front.png';
+import lst350Back from '$lib/assets/eastlake/img/lst350back.png';
 
-import lst356Front from '$lib/assets/eastlake/lst356front.png';
-import lst356Back from '$lib/assets/eastlake/lst356back.png';
+import lst356Front from '$lib/assets/eastlake/img/lst356front.png';
+import lst356Back from '$lib/assets/eastlake/img/lst356back.png';
 
-import lst272Front from '$lib/assets/eastlake/lst272front.png';
-import lst272Back from '$lib/assets/eastlake/lst272back.png';
+import lst272Front from '$lib/assets/eastlake/img/lst272front.png';
+import lst272Back from '$lib/assets/eastlake/img/lst272back.png';
 
-import lst254Front from '$lib/assets/eastlake/lst254front.png';
-import lst254Back from '$lib/assets/eastlake/lst254back.png';
+import lst254Front from '$lib/assets/eastlake/img/lst254front.png';
+import lst254Back from '$lib/assets/eastlake/img/lst254back.png';
 
 const lst350: Product = {
     id: 'ls350',
@@ -45,7 +45,7 @@ const lst254: Product = {
 
 
 export const title = 'Eastlake Girls 2023 Tennis Apparel';
-import logo2023 from '$lib/assets/eastlake/logo2023.png';
+import logo2023 from '$lib/assets/eastlake/img/logo2023.png';
 export const logo = logo2023;
 export const taxRate = 0.087;
 export const payPalEnabled = true;

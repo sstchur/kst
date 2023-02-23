@@ -4,7 +4,9 @@
 
 </script>
 
-<h2>⚠️ Form closes {$shortCloseDate} {~~$daysLeft}D:{~~$hoursLeft}H:{~~$minLeft}M:{~~$secLeft.toFixed(2)}S</h2>
+{#if $shortCloseDate}
+    <h2>⚠️ Form closes {$shortCloseDate} {~~$daysLeft}D:{~~$hoursLeft}H:{~~$minLeft}M:{~~$secLeft.toFixed(2)}S</h2>
+{/if}
 
 <style>
     h2 {

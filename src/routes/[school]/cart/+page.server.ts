@@ -6,10 +6,7 @@ import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import sgMail, { type MailDataRequired } from '@sendgrid/mail';
 
-const schoolCodes = new Map<string, number>([
-	['eastlake', 123456 ],
-	['skyline', 234567 ]
-]);
+import { schoolCodes } from '$lib/server/schoolCodes';
 
 let taxRate: number;
 

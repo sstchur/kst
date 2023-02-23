@@ -2,18 +2,11 @@ import clientPromise from "$lib/db/mongo";
 import { error } from "@sveltejs/kit";
 import { ObjectId } from "mongodb";
 
+import { schoolCodes } from '$lib/server/schoolCodes';
+
 export const prerender = false;
 
-const schoolCodes = new Map<string, number>([
-	['eastlake', 123456 ],
-	['skyline', 234567 ]
-]);
-
-export async function load({params, request }) {
-    if (request.url.includes('?/delete')) {
-        return;
-    }
-
+export async function load({params }) {
     const dbConnection = await clientPromise;
     const db = dbConnection.db(params.school);
     const collection = db.collection('girls2023');

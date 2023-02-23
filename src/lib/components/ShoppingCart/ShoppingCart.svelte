@@ -191,27 +191,25 @@
                 <div id="paypal-button-container"></div>
             {:else}
                 {#if readonly}
-                    This order cannot be modified, but you can delete this order or place an additional order, if desired.
-                    <input name="name" type="text" placeholder="Email" />
-                    <input name="code" type="number" placeholder="6 digit school code" />
-                    <button>Delete this order</button>
+                    <form method="post" action="?/deleteorder">
+                        This order cannot be modified, but you can delete this order or place an additional order, if desired.
+                        <input name="email" type="text" placeholder="Email" />
+                        <input name="code" type="number" placeholder="6 digit school code" />
+                        <button>Delete this order</button>
+                    </form>
                 {:else}
-                    {#if $page.form?.success}
-                        <strong>Order submitted successfully</strong>
-                    {:else}
-                        <form method="post" action="?/confirmorder">
-                            <input bind:value={name} name="name" type="text" placeholder="Name" />
-                            <input bind:value={email} name="email" type="email" placeholder="Email" />
-                            <input bind:value={code} name="code" type="number" placeholder="6 digit school code" />
-                            <input bind:value={subtotal} name="subtotal" type="hidden" />
-                            <input bind:value={salesTax} name="salesTax" type="hidden" />
-                            <input bind:value={grandTotal} name="grandTotal" type="hidden" />
-                            <input value={new Date()} name="orderDate" type="hidden" />
-                            <input value={$page.params.school} name="school" type="hidden" />
-                            <input value={JSON.stringify(items)} name="cart" type="hidden" />
-                            <button type="submit" disabled={!isFormValid}>Confirm order</button>
-                        </form>
-                    {/if}
+                    <form method="post" action="?/confirmorder">
+                        <input bind:value={name} name="name" type="text" placeholder="Name" />
+                        <input bind:value={email} name="email" type="email" placeholder="Email" />
+                        <input bind:value={code} name="code" type="number" placeholder="6 digit school code" />
+                        <input bind:value={subtotal} name="subtotal" type="hidden" />
+                        <input bind:value={salesTax} name="salesTax" type="hidden" />
+                        <input bind:value={grandTotal} name="grandTotal" type="hidden" />
+                        <input value={new Date()} name="orderDate" type="hidden" />
+                        <input value={$page.params.school} name="school" type="hidden" />
+                        <input value={JSON.stringify(items)} name="cart" type="hidden" />
+                        <button type="submit" disabled={!isFormValid}>Confirm order</button>
+                    </form>
                 {/if}
             {/if}
             </div>
@@ -289,6 +287,7 @@
     form {
         display: flex;
         flex-direction: column;
+        max-width: 340px;
     }
 
     button.link {

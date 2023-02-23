@@ -7,8 +7,8 @@ export type Product = {
     description?: string;
     images: string[];
     price: number;
-    customizable?: true;
-    varsityEnabled?: true;
+    customizable?: number;
+    varsityEnabled?: number;
     restrictedSizes?: Set<Size>;
 };
 
@@ -17,4 +17,5 @@ export type ProductInstance = Product & {
     quantity: number;
     customization: string,
     varsity: boolean;
+    dynamicPrice: number;
 }

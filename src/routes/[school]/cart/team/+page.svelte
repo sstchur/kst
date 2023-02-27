@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { page } from "$app/stores";
-	import { time_ranges_to_array } from "svelte/internal";
     import * as catalogs from '$lib/assets/catalogs';
-	import { onMount } from 'svelte';
 
     export let data;
     const { success, orders, school } = data;
@@ -29,7 +27,10 @@
             if (customization) {
                 const c = customization.toUpperCase();
                 const name = varsity ? `${c}/V` : c;
-                aggregatedProducts[id][[size]].names.push(name);
+                let times = quantity;
+                while (times--) {
+                    aggregatedProducts[id][[size]].names.push(name);
+                }
             }
         }
     }

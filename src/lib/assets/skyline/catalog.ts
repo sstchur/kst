@@ -55,7 +55,7 @@ export const schoolName = 'Skyline High School';
 export const collection = 'girls2023';
 import logo2023 from '$lib/assets/skyline/img/logo2023.png';
 export const logo = logo2023;
-export const taxRate = 0.101;
+export const taxRate = 0;
 export const markup = 5.00;
 export const payPalEnabled = false;
 export const closeDate = new Date(2023, 2, 1, 0, 0, 0);

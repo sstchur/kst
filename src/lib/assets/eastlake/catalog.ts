@@ -13,7 +13,7 @@ import lst254Front from '$lib/assets/eastlake/img/lst254front.png';
 import lst254Back from '$lib/assets/eastlake/img/lst254back.png';
 
 const lst350: Product = {
-    id: 'ls350',
+    id: 'lst350',
     title: 'Sport-Tek Tee',
     description: 'Lightweight, moisture-wicking, 100% polyester',
     images: [ lst350Front, lst350Back ],

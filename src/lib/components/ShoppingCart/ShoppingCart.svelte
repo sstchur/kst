@@ -56,7 +56,7 @@
             }
         },
         items: $cartItems.map((p, i) => ({
-            name: `(${p.id}) ${p.title} - SIZE: ${p.size}, CUSTOMIZATION: ${p.customization || 'N/A'}, VARSITY: ${p.varsity || 'N/A'} [For school: ${school}]`,
+            name: `(${p.id}) - SZ: ${p.size}, CUST: ${p.customization || 'N/A'}, VRSTY: ${p.varsity || 'N/A'} [school: ${school}]`,
             description: `SIZE: ${p.size}, CUSTOMIZATION: ${p.customization || 'N/A'}, VARSITY: ${p.varsity || 'N/A'}`,
             unit_amount: {
                 currency_code,

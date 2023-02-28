@@ -6,6 +6,7 @@
 
 {#if $shortCloseDate}
     <h2>⚠️ Form closes {$shortCloseDate} {~~$daysLeft}D:{~~$hoursLeft}H:{~~$minLeft}M:{~~$secLeft.toFixed(2)}S</h2>
+    <small>Something not working? <a href="mailto:info@kickserve.biz">info@kickserve.biz</a> for help.</small>
 {/if}
 
 <style>

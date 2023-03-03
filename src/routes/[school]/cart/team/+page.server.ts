@@ -8,7 +8,6 @@ export const prerender = false;
 
 export const load = (async ({ params, url }) => {
     const { school } = params;
-    console.log('SCHOOL', school);
 
     const { searchParams } = url;
     const code = Number(searchParams.get('code'));
@@ -35,7 +34,6 @@ export const load = (async ({ params, url }) => {
         }
     }
 
-    console.log('returning something not so useful');
     return { success: false, school, orders: [] }
 
 }) satisfies PageServerLoad;

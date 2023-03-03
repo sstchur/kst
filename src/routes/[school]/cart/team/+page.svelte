@@ -3,23 +3,21 @@
     import * as catalogs from '$lib/assets/catalogs';
 
     export let data;
-    const { success, orders, school } = data;
+    $: ({ success, orders, school } = $page.data);
 
-    console.log('$page.data', $page.data);
+    $: catalog = catalogs[school];
+    $: ({ products } = catalog);
 
-    const catalog = catalogs[school];
-    const { products } = catalog;
-
-    const teamSubtotal = orders.reduce((total, order) => total + Number(order.subtotal), 0).toFixed(2);
-    const teamSalexTax = orders.reduce((total, order) => total + Number(order.salesTax), 0).toFixed(2);
-    const teamGrandTotal = orders.reduce((total, order) => total + Number(order.grandTotal), 0).toFixed(2);
+    $: teamSubtotal = orders.reduce((total, order) => total + Number(order.subtotal), 0).toFixed(2);
+    $: teamSalexTax = orders.reduce((total, order) => total + Number(order.salesTax), 0).toFixed(2);
+    $: teamGrandTotal = orders.reduce((total, order) => total + Number(order.grandTotal), 0).toFixed(2);
 
     const aggregatedProducts = {};
-    for (const product of products) {
+    $: for (let product of products) {
         aggregatedProducts[product.id] = {};
     }
 
-    for (const order of orders) {
+    $: for (const order of orders) {
         for (const item of order.cart) {
             const { id, size, quantity, customization, varsity } = item;
             aggregatedProducts[id][[size]] = aggregatedProducts[id][[size]] || { quantity: 0, names: [] };
@@ -37,6 +35,7 @@
 
 </script>
 
+<h1>{success}</h1>
 {#if success}
     <ol>
         {#each orders as order}

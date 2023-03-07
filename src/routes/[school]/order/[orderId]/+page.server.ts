@@ -1,8 +1,10 @@
 import clientPromise from "$lib/db/mongo";
 import { error } from "@sveltejs/kit";
 import { ObjectId } from "mongodb";
+import sgMail, { type MailDataRequired } from '@sendgrid/mail';
 
 import { schoolCodes } from '$lib/server/schoolCodes';
+import type { Order } from "../../cart/+page.server";
 
 export const prerender = false;
 
@@ -46,9 +48,34 @@ export const actions = {
 
         if (order) {
             const response = await collection.deleteOne(searchCriteria);
-            deleted = true;
+            sendDeletionEmail(order._id, order);
             return { orderdeleted: true, response }
         }
         throw error(404, 'Order not found with the given email');
     }
+}
+
+function sendDeletionEmail(orderId: string, order: Order) {
+    const { school } = order;
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    const msg: MailDataRequired = {
+        to: order.email,
+        from: 'info@kickserve.biz',
+        bcc: 'info@kickserve.biz',
+        subject: `Order deleted (${orderId})`,
+        text:
+`This email confirms you have deleted order ${orderId}. No further action is needed.
+
+You can place a new order if desired: https://kickserve.vercel.app/${school}/order/
+`,
+    };
+
+    sgMail.send(msg)
+        .then(() => {
+            console.log('Email sent!');
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+
 }

@@ -30,6 +30,9 @@
 {:else}
     <div>
         <h2>Order {orderId} not found.</h2>
+
+        <p>If you just deleted your order, no further action is needed. If you are searching for an order,
+           it may have been previously deleted.</p>
     </div>
 {/if}
 

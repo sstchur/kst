@@ -10,7 +10,7 @@ import { schoolCodes } from '$lib/server/schoolCodes';
 
 let taxRate: number;
 
-type Order = {
+export type Order = {
     name: string,
     email: string,
     school: string,
@@ -107,5 +107,5 @@ grand total: ${order.grandTotal}
         .catch((error) => {
             console.error(error);
         });
-
 }
+

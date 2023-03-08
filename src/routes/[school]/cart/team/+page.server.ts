@@ -19,7 +19,7 @@ export const load = (async ({ params, url }) => {
 
         const dbConnection = await clientPromise;
         const db = dbConnection.db(params.school);
-        const collection = db.collection('girls2023');
+        const collection = db.collection('girls2023-2');
 
         try {
             const orders = await (await collection.find({})).toArray();

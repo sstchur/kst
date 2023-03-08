@@ -52,7 +52,7 @@ export const products: Product[] = [
 
 export const title = 'Skyline Girls 2023 Tennis Apparel';
 export const schoolName = 'Skyline High School';
-export const collection = 'girls2023';
+export const collection = 'girls2023-2';
 import logo2023 from '$lib/assets/skyline/img/logo2023.png';
 export const logo = logo2023;
 export const taxRate = 0;

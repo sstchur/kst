@@ -62,7 +62,7 @@ export const actions = {
     
         const dbConnection = await clientPromise;
         const db = dbConnection.db(school);
-        const collection = db.collection('girls2023');
+        const collection = db.collection('girls2023-2');
          
         const ins = await collection.insertOne(order, (err, res) => {
             console.log('res', res)

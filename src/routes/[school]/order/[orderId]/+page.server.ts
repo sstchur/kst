@@ -11,7 +11,7 @@ export const prerender = false;
 export async function load({params }) {
     const dbConnection = await clientPromise;
     const db = dbConnection.db(params.school);
-    const collection = db.collection('girls2023');
+    const collection = db.collection('girls2023-2');
     const id = params.orderId;
 
     try {
@@ -41,7 +41,7 @@ export const actions = {
     
         const dbConnection = await clientPromise;
         const db = dbConnection.db(school);
-        const collection = db.collection('girls2023');
+        const collection = db.collection('girls2023-2');
         
         const searchCriteria = { _id: new ObjectId(id), email };
         const order = (await ((await collection.find(searchCriteria)).toArray()))[0];

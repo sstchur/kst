@@ -21,14 +21,19 @@
     
     $: isFormValid = code && name && email;
 
+    let processing = false;
+
     let subtotal: string;
     $: subtotal = $cartSubtotal.toFixed(2);
 
-    let salesTax: string;
-    $: salesTax = ($cartSubtotal * taxRate).toFixed(2);
+    let wouldBeSalesTax: number;
+    $: wouldBeSalesTax = $cartSubtotal * taxRate;
 
     let payPalFee: string;
-    $: payPalFee = payPalEnabled ? ($cartSubtotal * 3.49/100 + 0.49).toFixed(2) : '0.00';
+    $: payPalFee = payPalEnabled ? (($cartSubtotal + wouldBeSalesTax) * 3.49/100 + 0.49).toFixed(2) : '0.00';
+
+    let salesTax: string;
+    $: salesTax = (($cartSubtotal + Number(payPalFee)) * taxRate).toFixed(2);
 
     let grandTotal: string;
     $: grandTotal = ($cartSubtotal + Number(salesTax) + Number(payPalFee)).toFixed(2);
@@ -164,18 +169,18 @@
                         <td class="amount">${order ? order.subtotal : subtotal}</td>
                         <td></td>
                     </tr>
-                    <tr>
-                        <td colspan=4 class="price">Sales tax</td>
-                        <td class="amount">${order ? order.salesTax : salesTax}</td>
-                        <td></td>
-                    </tr>
                     {#if payPalEnabled}
                     <tr>
                         <td colspan=4 class="price">Paypal fee</td>
                         <td class="amount">${payPalFee}</td>
                         <td></td>
                     </tr>
-                    {/if}
+                    {/if}                    
+                    <tr>
+                        <td colspan=4 class="price">Sales tax</td>
+                        <td class="amount">${order ? order.salesTax : salesTax}</td>
+                        <td></td>
+                    </tr>
                     <tr>
                         <td colspan=4 class="price">Grand total</td>
                         <td class="amount">${order ? order.grandTotal : grandTotal}</td>
@@ -191,14 +196,14 @@
                 <div id="paypal-button-container"></div>
             {:else}
                 {#if readonly}
-                    <form method="post" action="?/deleteorder">
+                    <form method="post" action="?/deleteorder" on:submit={() => processing = true }>
                         This order cannot be modified, but you can delete this order or place an additional order, if desired.
                         <input name="email" type="text" placeholder="Email" />
                         <input name="code" type="number" placeholder="6 digit school code" />
                         <button>Delete this order</button>
                     </form>
                 {:else}
-                    <form method="post" action="?/confirmorder">
+                    <form method="post" action="?/confirmorder" on:submit={() => processing = true }>
                         <input bind:value={name} name="name" type="text" placeholder="Name" />
                         <input bind:value={email} name="email" type="email" placeholder="Email" />
                         <input bind:value={code} name="code" type="number" placeholder="6 digit school code" />
@@ -208,7 +213,7 @@
                         <input value={new Date()} name="orderDate" type="hidden" />
                         <input value={$page.params.school} name="school" type="hidden" />
                         <input value={JSON.stringify(items)} name="cart" type="hidden" />
-                        <button type="submit" disabled={!isFormValid}>Confirm order</button>
+                        <button type="submit" disabled={!isFormValid || processing}>Confirm order</button>
                     </form>
                 {/if}
             {/if}

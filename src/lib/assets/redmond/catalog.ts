@@ -105,7 +105,7 @@ export const products: Product[] = [
 
 export const title = 'Redmond High 2023 Tennis Apparel';
 export const schoolName = 'Redmond High School';
-export const collection = 'girls2023';
+export const collectionName = 'girls2023';
 import logo2023 from '$lib/assets/redmond/img/logo2023.png';
 export const logo = logo2023;
 export const taxRate = 0.101;

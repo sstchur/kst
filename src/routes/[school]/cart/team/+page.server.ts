@@ -1,3 +1,4 @@
+import * as catalogs from '$lib/assets/catalogs';
 import clientPromise from '$lib/db/mongo';
 import { schoolCodes } from '$lib/server/schoolCodes';
 import { error, redirect } from '@sveltejs/kit';
@@ -18,8 +19,9 @@ export const load = (async ({ params, url }) => {
         }
 
         const dbConnection = await clientPromise;
-        const db = dbConnection.db(params.school);
-        const collection = db.collection('girls2023-2');
+        const db = dbConnection.db(school);
+        const { collectionName } = catalogs[school];
+        const collection = db.collection(collectionName);
 
         try {
             const orders = await (await collection.find({})).toArray();

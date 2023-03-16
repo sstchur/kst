@@ -35,14 +35,14 @@
 
 </script>
 
-<h1>{success}</h1>
+<main>
 {#if success}
-    <ol>
+    <ul>
         {#each orders as order}
             <li>
-                {order._id}
-                {order.name}
-                {order.email}
+                Order ID: {order._id} <br/>
+                Name: {order.name} <br/>
+                Email: {order.email} <br />
                 <ol>
                     {#each order.cart as item}
                     <li>
@@ -53,7 +53,7 @@
                            name = {item.customization} /
                         {/if}
                         {#if item.varsity}
-                            Varsitry imprint /
+                            Varsity imprint /
                         {/if}
                         qty = {item.quantity} /
                         {item.dynamicPrice}
@@ -63,11 +63,10 @@
                     Subtotal: {order.subtotal} <br>
                     Sales tax: {order.salesTax} <br>
                     Grand total: {order.grandTotal} <br>
-                    <hr>
                 </ol>
             </li>
         {/each}
-    </ol>
+    </ul>
 
     <hr>
     Team Subtotal: {teamSubtotal} <br>
@@ -98,3 +97,27 @@
         <button type="submit">View Team Cart</button>
     </form>
 {/if}
+</main>
+
+<style>
+
+    main {
+        margin: 3em;
+    }
+
+    ul {
+        padding: 0;
+        list-style: none;
+    }
+
+    ul li {
+        margin-bottom: 3em;
+    }
+
+    ol {
+        padding: .5em 0 0 1.6em;
+    }
+    ol li {
+        margin-bottom: 0;
+    }
+</style>

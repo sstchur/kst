@@ -101,6 +101,10 @@
       flex-direction: column;
       align-items: center;
     }
+
+    .productDetails {
+      position: relative;
+    }
   
     .productDetails img {
       max-width: 100%;
@@ -125,6 +129,18 @@
       font-size: small;
     }
 
+    .productDetails.required::before {
+      position: absolute;
+      top: 5px;
+      left: -5px;
+      content: "Required";
+      text-transform: uppercase;
+      transform: rotate(-30deg);
+      padding: 10px;
+      background: orange;
+      border-radius: 6px;
+    }
+
     strong {
         color: green;
         font-size: 1.25em;
@@ -133,7 +149,7 @@
   </style>
   
 <fieldset>
-    <div class="productDetails">
+    <div class="productDetails {product.required ? 'required' : ''}">
         <div class="images">
         {#each product.images as image}
             <img src={image} height=325 alt={product.title} />

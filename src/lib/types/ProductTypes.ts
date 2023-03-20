@@ -10,6 +10,7 @@ export type Product = {
     customizable?: number;
     varsityEnabled?: number;
     restrictedSizes?: Set<Size>;
+    required?: boolean;
 };
 
 export type ProductInstance = Product & {

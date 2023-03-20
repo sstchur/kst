@@ -15,7 +15,8 @@ const lst700: Product = {
     title: 'Sport-Tek Ladies V-Next, Team Tee, True Navy',
     description: 'Lightweight, 95/5 poly/spandex',
     images: [ lst700Front ],
-    price: 23.00
+    price: 23.00,
+    required: true,
 };
 
 const lst350: Product = {
@@ -60,7 +61,7 @@ export const logo = logo2023;
 export const taxRate = 0.087;
 export const markup = 0;
 export const payPalEnabled = true;
-export const closeDate = new Date(2023, 2, 22, 23, 59, 59);
+export const closeDate = new Date(2023, 2, 24, 23, 59, 59);
 export const products: Product[] = [
     lst700,
     lst350,

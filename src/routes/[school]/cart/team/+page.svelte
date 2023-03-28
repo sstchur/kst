@@ -20,9 +20,10 @@
     $: for (const order of orders) {
         for (const item of order.cart) {
             const { id, size, quantity, customization, varsity } = item;
+            console.log(order.name, varsity);
             aggregatedProducts[id][[size]] = aggregatedProducts[id][[size]] || { quantity: 0, names: [] };
             aggregatedProducts[id][[size]].quantity += quantity;
-            if (customization) {
+            if (customization || varsity) {
                 const c = customization.toUpperCase();
                 const name = varsity ? `${c}/V` : c;
                 let times = quantity;
@@ -32,6 +33,7 @@
             }
         }
     }
+
 
 </script>
 

@@ -18,7 +18,22 @@ import augusta1790Black from '$lib/assets/redmond/img/augusta1790-black.png';
 import augusta2797Green from '$lib/assets/redmond/img/augusta2797-green.png';
 import augusta2797Black from '$lib/assets/redmond/img/augusta2797-black.png';
 
+import pc78FrontAndBack from '$lib/assets/redmond/img/pc78frontAndBack.png';
+import divisionChampsLogo from '$lib/assets/redmond/img/division-champs-logo.png';
+
 export const products: Product[] = [
+    {
+        id: 'pc78',
+        title: 'Crewneck sweatshirt, white',
+        description: '7.8oz, 50/50 cotton/poly fleece',
+        images: [divisionChampsLogo, pc78FrontAndBack],
+        restrictedSizes: new Set(['X-Small']),
+        price: 33.50,
+        customizable: 8.00
+    }
+];
+
+export const products_spring2023: Product[] = [
     {
         id: 'holloway222777-green',
         title: 'Ladies Holloway Training Tank, Green',
@@ -103,7 +118,7 @@ export const products: Product[] = [
     }
 ];
 
-export const title = 'Redmond High 2023 Tennis Apparel';
+export const title = 'Redmond Girls 2022/23 Division Champs Apparel';
 export const schoolName = 'Redmond High School';
 export const collectionName = 'girls2023';
 import logo2023 from '$lib/assets/redmond/img/logo2023.png';
@@ -111,4 +126,4 @@ export const logo = logo2023;
 export const taxRate = 0.101;
 export const markup = 5.00;
 export const payPalEnabled = true;
-export const closeDate = new Date(2023, 2, 1, 23, 59, 59);
+export const closeDate = new Date(2023, 5, 7, 23, 59, 59);

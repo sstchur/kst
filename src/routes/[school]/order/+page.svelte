@@ -23,7 +23,7 @@
 </script>
 
 {#if !$closed}
-    <div style="display: flex; flex-wrap: wrap; justify-content: center">
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; position: relative; z-index: 0;">
         {#each products as product}
             <div class="product">
                 <ProductDetails {product} {markup} on:addToCart={addToCart} />

@@ -11,14 +11,13 @@
     let customization = '';
     let varsity = false;
 
-    $: isXXL = size === '2X-Large' || size === '3X-Large' || size === '4X-Large';
-    $: dynamicPrice = Number(calcPrice(product, isXXL, markup)).toFixed(2);
+    $: xlCharge = size === '2X-Large' ? 2 : size === '3X-Large' ? 4 : size === '4X-Large' ? 6 : 0;
+    $: dynamicPrice = Number(calcPrice(product, xlCharge, markup)).toFixed(2);
   
-    $: calcPrice = (product: Product, isXXL: boolean, markup: number) => {
-        const extraLargeCharge = isXXL ? 2 : 0;
+    $: calcPrice = (product: Product, xlCharge: number, markup: number) => {
         const nameCharge = customization ? product.customizable ?? 0 : 0;
         const varsityCharge = varsity ? product.varsityEnabled ?? 0 : 0;
-        return product.price + markup + extraLargeCharge + nameCharge + varsityCharge;  
+        return product.price + markup + xlCharge + nameCharge + varsityCharge;  
     }
 
     const dispatch = createEventDispatcher();

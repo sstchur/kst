@@ -65,6 +65,7 @@
     }
 
     nav {
+        z-index: 100;
         display: flex;
         background: #507599;
         padding: 1em;
@@ -91,6 +92,7 @@
     }
 
     #kstLogo {
+        z-index: 101;
         position: relative;
         left: 10px;
         margin-top: 10px;

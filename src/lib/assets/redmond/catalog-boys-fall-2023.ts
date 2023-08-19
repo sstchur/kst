@@ -11,7 +11,7 @@ import dt6100_black_back from '$lib/assets/redmond/img/boys/fall2023/dt6100_blac
 
 export const products: Product[] = [
     {
-        id: 'st250-green',
+        id: 'st350-green',
         title: 'Sport-Tek Competitor T, Forest Green',
         description: '3.8oz, 100% polyester',
         images: [st350_green_redmond_mustangs, redmond_mustangs_gold_letters],
@@ -19,7 +19,7 @@ export const products: Product[] = [
         customizable: 8.00
     },
     {
-        id: 'st250-white',
+        id: 'st350-white',
         title: 'Sport-Tek Competitor T, White',
         description: '3.8oz, 100% polyester',
         images: [st350_white_redmond_mustangs, redmond_mustangs_green_letters],
@@ -38,7 +38,7 @@ export const products: Product[] = [
 
 export const title = 'Redmond Boys Fall 2023 Tennis Apparel';
 export const schoolName = 'Redmond High School';
-export const collectionName = 'boysFall2023';
+export const collectionName = 'redmond-boysFall2023';
 import logo2023 from '$lib/assets/redmond/img/boys/fall2023/redmond_mustangs_green_letters.png';
 export const logo = logo2023;
 export const taxRate = 0.101;

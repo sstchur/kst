@@ -12,14 +12,14 @@ export const products: Product[] = [
         title: 'Sport-Tek Competitor T, White',
         description: '3.8oz, 100% polyester',
         images: [st350Front, st350Back],
-        price: 0.0
+        price: 18.95
     },
     {
         id: 'dt6100',
         title: 'District Fleece Hoodie, Grey Frost',
         description: '8.8oz, 65/35 ring spun cotton/polyester',
         images: [dt6100Front, dt6100Back],
-        price: 0.0
+        price: 30.95
     }
 ];
 

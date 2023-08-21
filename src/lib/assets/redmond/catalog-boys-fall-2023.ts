@@ -2,9 +2,11 @@ import type { Product } from "$lib/types/ProductTypes";
 
 import redmond_mustangs_gold_letters from '$lib/assets/redmond/img/boys/fall2023/redmond_mustangs_gold_letters.png';
 import st350_green_redmond_mustangs from '$lib/assets/redmond/img/boys/fall2023/st350_green_redmond_mustangs.png';
+import st350_green_back from '$lib/assets/redmond/img/boys/fall2023/st350_green_back.png';
 
 import redmond_mustangs_green_letters from '$lib/assets/redmond/img/boys/fall2023/redmond_mustangs_green_letters.png';
 import st350_white_redmond_mustangs from '$lib/assets/redmond/img/boys/fall2023/st350_white_redmond_mustangs.png';
+import st350_white_back from '$lib/assets/redmond/img/boys/fall2023/st350_white_back.png';
 
 import dt6100_black_front from '$lib/assets/redmond/img/boys/fall2023/dt6100_black_front.png';
 import dt6100_black_back from '$lib/assets/redmond/img/boys/fall2023/dt6100_black_back.png';
@@ -14,7 +16,7 @@ export const products: Product[] = [
         id: 'st350-green',
         title: 'Sport-Tek Competitor T, Forest Green',
         description: '3.8oz, 100% polyester',
-        images: [st350_green_redmond_mustangs, redmond_mustangs_gold_letters],
+        images: [st350_green_redmond_mustangs, st350_green_back, redmond_mustangs_gold_letters],
         price: 19.95,
         customizable: 8.00
     },
@@ -22,7 +24,7 @@ export const products: Product[] = [
         id: 'st350-white',
         title: 'Sport-Tek Competitor T, White',
         description: '3.8oz, 100% polyester',
-        images: [st350_white_redmond_mustangs, redmond_mustangs_green_letters],
+        images: [st350_white_redmond_mustangs, st350_white_back, redmond_mustangs_green_letters],
         price: 19.95,
         customizable: 8.00
     },

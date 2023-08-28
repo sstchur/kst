@@ -4,11 +4,7 @@ import pc380Front from '$lib/assets/juanita/img/boys/fall2023/pc380_deep-navy_fr
 
 import pc78hFront from '$lib/assets/juanita/img/boys/fall2023/pc78h_dark-heather-grey_front.png';
 
-import pc78hLeftSleeve from '$lib/assets/juanita/img/boys/fall2023/pc78h_dark-heather-grey_left_sleeve.png';
-
 import j343Front from '$lib/assets/juanita/img/boys/fall2023/j343_dress-navy-blue_front.png';
-
-import j343LeftSleeve from '$lib/assets/juanita/img/boys/fall2023/j343_dress-navy-blue_left_sleeve.png';
 
 const pc380: Product = {
     id: 'pc380-deep-navy',
@@ -23,7 +19,7 @@ const pc78h: Product = {
     id: 'pc78h-grey',
     title: 'PC78H: Port & Company Pullover Hoodie, Dark Heather Grey',
     description: '7.8-ounce, 50/50 cotton/poly fleece',
-    images: [ pc78hFront, pc78hLeftSleeve ],
+    images: [ pc78hFront ],
     restrictedSizes: new Set(['X-Small']),
     price: 0
 };
@@ -32,7 +28,7 @@ const j343: Product = {
     id: 'j343-dress-navy',
     title: 'J343: Port Authority Zephyr 1/2 Zip Pullover, Dress Navy Blue',
     description: '100% polyester, wind/water resistant, left-size seam zipper for easy on/off',
-    images: [ j343Front, j343LeftSleeve ],
+    images: [ j343Front ],
     price: 0
 };
 

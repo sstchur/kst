@@ -11,7 +11,7 @@ const pc380: Product = {
     title: 'PC380: Port & Company Performance Tee, Deep Navy',
     description: '3.8-ounce, 100% polyester, UPF rating of 50, removable tag',
     images: [ pc380Front ],
-    price: 0,
+    price: 19.95,
     required: true,
 };
 
@@ -21,7 +21,7 @@ const pc78h: Product = {
     description: '7.8-ounce, 50/50 cotton/poly fleece',
     images: [ pc78hFront ],
     restrictedSizes: new Set(['X-Small']),
-    price: 0
+    price: 32.95
 };
 
 const j343: Product = {
@@ -29,7 +29,7 @@ const j343: Product = {
     title: 'J343: Port Authority Zephyr 1/2 Zip Pullover, Dress Navy Blue',
     description: '100% polyester, wind/water resistant, left-size seam zipper for easy on/off',
     images: [ j343Front ],
-    price: 0
+    price: 37.95
 };
 
 
@@ -38,10 +38,10 @@ export const schoolName = 'Juanita High School';
 export const collectionName = 'juanita-boysFall2023';
 import logo2023 from '$lib/assets/juanita/img/boys/fall2023/logo_2023_fall_boys.png';
 export const logo = logo2023;
-export const taxRate = 0.087;
+export const taxRate = 0.102;
 export const markup = 0;
 export const payPalEnabled = true;
-export const closeDate = new Date(2024, 8, 1, 23, 59, 59);
+export const closeDate = new Date(2023, 8, 1, 9, 30, 59);
 export const products: Product[] = [
     pc380,
     pc78h,

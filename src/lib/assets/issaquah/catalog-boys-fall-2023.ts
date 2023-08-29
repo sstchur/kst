@@ -11,6 +11,7 @@ const st350: Product = {
     title: 'ST350: Sport-Tek dri-fit T, Purple',
     description: '3.8-ounce, 100% polyester, removable tag',
     images: [ st350Front, logo2023 ],
+    customizable: 8.00,
     price: 19.95,
 };
 
@@ -19,6 +20,7 @@ const st350ls: Product = {
     title: 'ST350LS: Sport-Tek dri-fit long sleeve T, Purple',
     description: '3.8-ounce, 100% polyester, removable tag',
     images: [ st350lsFront, logo2023 ],
+    customizable: 8.00,
     price: 22.95
 };
 
@@ -28,6 +30,7 @@ const pc78: Product = {
     description: '7.8-ounce, 50/50 cotton/poly fleece, removable tag',
     images: [ pc78Front, logo2023 ],
     restrictedSizes: new Set(['X-Small']),
+    customizable: 8.00,
     price: 32.95
 };
 

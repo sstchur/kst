@@ -82,7 +82,7 @@
     let payPalTxnId = '';
 
     // AZ6KxIlNEhfWChYzGXiJtfMZOrkrllJmRc1MYhNnGAytbjk3_YMDeOIf4M24TYi-OKdd7IYdOUxZ5R9X
-    loadScript({ "client-id": 'AZ6KxIlNEhfWChYzGXiJtfMZOrkrllJmRc1MYhNnGAytbjk3_YMDeOIf4M24TYi-OKdd7IYdOUxZ5R9X', commit: true, currency: 'USD', components: 'buttons', 'disable-funding': ['card', 'credit'], 'enable-funding': ['venmo'] })
+    loadScript({ "client-id": 'AZ6KxIlNEhfWChYzGXiJtfMZOrkrllJmRc1MYhNnGAytbjk3_YMDeOIf4M24TYi-OKdd7IYdOUxZ5R9X', commit: true, currency: 'USD', components: 'buttons', 'disable-funding': ['credit'] })
         .then((paypal) => {
             paypal.Buttons({
             style: {

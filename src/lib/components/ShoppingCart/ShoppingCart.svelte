@@ -92,7 +92,6 @@
 
 			// Sets up the transaction when a payment button is clicked
 			createOrder: (data, actions) => {
-                console.log('UNITS:', purchaseUnits)
 			    return actions.order.create({
 				    purchase_units: [ purchaseUnits ]
 			    });

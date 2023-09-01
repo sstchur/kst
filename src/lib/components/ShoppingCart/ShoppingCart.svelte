@@ -193,7 +193,7 @@
         {#if items.length > 0}
             <div class="payment">
             {#if payPalEnabled}
-                <div id="paypal-button-container"></div>
+                <div id="paypal-button-container" style="z-index:0"></div>
             {:else}
                 {#if readonly}
                     <form method="post" action="?/deleteorder" on:submit={() => processing = true }>

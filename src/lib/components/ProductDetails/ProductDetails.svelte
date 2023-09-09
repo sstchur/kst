@@ -6,9 +6,9 @@
     export let product: Product;
     export let markup: number;
   
-    let size: Size;
+    let size: Size = 'Large';
     let quantity: number;
-    let customization = '';
+    let customization = 'DJANG';
     let varsity = false;
 
     $: xlCharge = size === '2X-Large' ? 2 : size === '3X-Large' ? 4 : size === '4X-Large' ? 6 : 0;

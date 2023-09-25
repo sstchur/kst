@@ -10,6 +10,7 @@
     let quantity: number;
     let customization = '';
     let varsity = false;
+    let memo = '';
 
     $: xlCharge = size === '2X-Large' ? 2 : size === '3X-Large' ? 4 : size === '4X-Large' ? 6 : 0;
     $: dynamicPrice = Number(calcPrice(product, xlCharge, markup)).toFixed(2);
@@ -24,7 +25,7 @@
   
     function dispatchAddToCart(product: Product) {
       return function() {
-        const productInstance = { ...product, size, quantity, customization, varsity, dynamicPrice };
+        const productInstance = { ...product, size, quantity, customization, varsity, dynamicPrice, memo };
         dispatch('addToCart', { product, productInstance });
         reset();
       }
@@ -81,7 +82,8 @@
       margin: .5em 0;
     }
   
-    .productOption label[for=customization] {
+    .productOption label[for=customization],
+    .productOption label[for=memo] {
       display: block;
     }
   
@@ -194,6 +196,10 @@
                 <label for="customization">Name on back (optional):</label> <input name="customization" bind:value={customization} type="text" placeholder="Name">
             </div>
             {/if}
+
+            <div class="productOption">
+              <label for="memo">Memo (to identify your order):</label> <input name="memo" bind:value={memo } type="text" placeholder="Ex: student name">
+            </div>
 
         </div>
         </div>

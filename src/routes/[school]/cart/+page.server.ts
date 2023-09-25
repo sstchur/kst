@@ -37,6 +37,9 @@ export const actions = {
         const data = await request.formData();
         const name = data.get('name');
         const email = data.get('email');
+        const notes = data.get('notes');
+        const payPalOrder = data.get('payPalOrder');
+
         const code = Number(data.get('code')?.valueOf());
         const school = data.get('school')?.toString() ?? '';
         const orderDate = data.get('orderDate')?.toString() ?? '';
@@ -52,13 +55,17 @@ export const actions = {
         const order = { 
             name,
             email,
+            notes,
             orderDate,
             school,
             subtotal,
             salesTax,
             grandTotal,
-            cart: JSON.parse(data.get('cart')?.toString() ?? '')
+            cart: JSON.parse(data.get('cart')?.toString() ?? ''),
+            payPalOrder
         }
+
+        console.log('ORDER', order);
 
         const dbConnection = await clientPromise;
         const db = dbConnection.db(school);
@@ -70,9 +77,9 @@ export const actions = {
         });
 
         const orderId = ins.insertedId.toString();
-        sendConfirmationEmail(orderId, order);
+        //sendConfirmationEmail(orderId, order);
     
-        return { success: true, orderId };
+        return { success: true, orderId, payPalOrder };
     }        
 };
 

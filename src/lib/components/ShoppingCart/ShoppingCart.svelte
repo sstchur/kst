@@ -6,7 +6,7 @@
     import { loadScript } from "@paypal/paypal-js";
 
     const { school } = $page.params;
-    const { payPalEnabled } = catalogs[school];
+    const { payPalEnabled, staticCode } = catalogs[school];
 
     const shoppingCart = createShoppingCart(school);
 
@@ -16,8 +16,10 @@
     export let order = null;
 
     let name = '';
+    let notes = '';
     let email = '';
-    let code: number | undefined = undefined;
+    let code: number | undefined = staticCode ?? undefined;
+    let payPalOrder: string = '';
     
     $: isFormValid = code && name && email;
 
@@ -81,8 +83,9 @@
     let payPalTxnStatus = '';
     let payPalTxnId = '';
 
-    // AZ6KxIlNEhfWChYzGXiJtfMZOrkrllJmRc1MYhNnGAytbjk3_YMDeOIf4M24TYi-OKdd7IYdOUxZ5R9X
-    loadScript({ "client-id": 'AZ6KxIlNEhfWChYzGXiJtfMZOrkrllJmRc1MYhNnGAytbjk3_YMDeOIf4M24TYi-OKdd7IYdOUxZ5R9X', commit: true, currency: 'USD', components: 'buttons', 'disable-funding': ['credit'] })
+    const clientId = 'AZ6KxIlNEhfWChYzGXiJtfMZOrkrllJmRc1MYhNnGAytbjk3_YMDeOIf4M24TYi-OKdd7IYdOUxZ5R9X'
+    //const clientId = 'sb';
+    loadScript({ "client-id": clientId, commit: true, currency: 'USD', components: 'buttons', 'disable-funding': ['credit'] })
         .then((paypal) => {
             paypal.Buttons({
             style: {
@@ -103,11 +106,16 @@
                     // Successful capture! For dev/demo purposes:
                     console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
                     const transaction = orderData.purchase_units[0].payments.captures[0];
-                    payPalSucceeded = true;
                     payPalTxnStatus = transaction.status as unknown as any;
                     payPalTxnId = transaction.id as unknown as any;
                     
-                    createShoppingCart(school).clear();
+                    email = orderData.payer.email_address ?? '<missing email address>';
+                    name = `${orderData.payer.name?.given_name} ${orderData.payer.name?.surname}`;
+                    payPalOrder = JSON.stringify(orderData);
+                    requestAnimationFrame(() => {
+                        document.forms['postPayPalForm'].submit();
+                        createShoppingCart(school).clear();
+                    });
                 });
             }
             }).render('#paypal-button-container');
@@ -121,8 +129,9 @@
     {#if payPalSucceeded }
         <h2>Thank you for your order.</h2>
         <h3>Your PayPal transaction ID is {payPalTxnId}</h3>
-        <p>If you have questions about your order, or would like to make a change,
-           email <a style="display: inline" href="mailto:info@kickserve.biz">info@kickserve.biz</a> and include the Transaction ID.</p>
+        <p>Please know that orders are not shipped directly to students. Instead they delivered to your school's coach for distribution to the players.
+        If you have questions about your order, or would like to make a change,
+        email <a style="display: inline" href="mailto:info@kickserve.biz">info@kickserve.biz</a> and include the Transaction ID.</p>
     {:else}
         <a href="/{school}/order">Back to order form</a>
 
@@ -192,7 +201,20 @@
         {#if items.length > 0}
             <div class="payment">
             {#if payPalEnabled}
-                <div id="paypal-button-container" style="z-index:0"></div>
+                <form name="postPayPalForm" method="post" action="?/confirmorder" on:submit={() => processing = true }>
+                    <textarea bind:value={notes} name="notes" placeholder="Enter any notes for your order here" />
+                    <input bind:value={name} name="name" type="hidden" />
+                    <input bind:value={email} name="email" type="hidden" />
+                    <input bind:value={code} name="code" type="hidden" />
+                    <input bind:value={subtotal} name="subtotal" type="hidden" />
+                    <input bind:value={salesTax} name="salesTax" type="hidden" />
+                    <input bind:value={grandTotal} name="grandTotal" type="hidden" />
+                    <input value={new Date()} name="orderDate" type="hidden" />
+                    <input value={$page.params.school} name="school" type="hidden" />
+                    <input value={JSON.stringify(items)} name="cart" type="hidden" />         
+                    <input bind:value={payPalOrder} name="payPalOrder" type="text" />   
+                    <div id="paypal-button-container" style="z-index:0"></div>
+                </form>
             {:else}
                 {#if readonly}
                     <form method="post" action="?/deleteorder" on:submit={() => processing = true }>
@@ -292,6 +314,12 @@
         display: flex;
         flex-direction: column;
         max-width: 340px;
+    }
+
+    textarea[name=notes] {
+        height: 100px;
+        width: 300px;
+        margin-bottom: 20px;
     }
 
     button.link {

@@ -11,6 +11,7 @@ export type Product = {
     varsityEnabled?: number;
     restrictedSizes?: Set<Size>;
     required?: boolean;
+    memo?: string;
 };
 
 export type ProductInstance = Product & {

@@ -212,7 +212,7 @@
                     <input value={new Date()} name="orderDate" type="hidden" />
                     <input value={$page.params.school} name="school" type="hidden" />
                     <input value={JSON.stringify(items)} name="cart" type="hidden" />         
-                    <input bind:value={payPalOrder} name="payPalOrder" type="text" />   
+                    <input bind:value={payPalOrder} name="payPalOrder" type="hidden" />   
                     <div id="paypal-button-container" style="z-index:0"></div>
                 </form>
             {:else}

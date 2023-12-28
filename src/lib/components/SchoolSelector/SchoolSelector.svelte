@@ -2,8 +2,7 @@
     import * as catalogs from '$lib/assets/catalogs';
 	import { createEventDispatcher } from 'svelte';
     import { closeDate, timeLeft } from '$lib/stores/timeLeft';
-    let { closed } = timeLeft;
-    closed = false;
+    const { closed } = timeLeft;
 
     export let school: keyof typeof catalogs | '' = '';
     export let schools: { key: string, name: (keyof typeof catalogs)}[];

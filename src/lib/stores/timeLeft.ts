@@ -21,7 +21,7 @@ const daysLeft = derived(remainingTime, $timeLeft => $timeLeft/1000/60/60/24);
 const hoursLeft = derived(daysLeft, $daysLeft => ($daysLeft - ~~$daysLeft) * 24);
 const minLeft = derived(hoursLeft, $hoursLeft => ($hoursLeft - ~~$hoursLeft) * 60);
 const secLeft = derived(minLeft, $minLeft => ($minLeft - ~~$minLeft) * 60);
-const closed = derived(remainingTime, x => false); //$remainingTime => $remainingTime < 0);
+const closed = derived(remainingTime, $remainingTime => $remainingTime < 0);
 
 export const timeLeft = {
     daysLeft,

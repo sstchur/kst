@@ -3,6 +3,7 @@ export type Size = (typeof Sizes)[number];
 
 export type Product = {
     id: string;
+    model?: string;
     title: string;
     description?: string;
     images: string[];

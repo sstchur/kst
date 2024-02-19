@@ -125,6 +125,10 @@
       font-weight: 400;
       margin-top: 2em;
     }
+
+    .productDetails .model {
+      font-size: .75em;
+    }
   
     .productDetails .desc {
       font-size: small;
@@ -157,11 +161,18 @@
         {/each}
         </div>
 
+
+
         <span class="title">
         {product.title}
         </span>
 
-        <p class="desc">{product.description}</p>
+        <p class="desc">
+        {product.description}
+        {#if product.model}
+          <span class="model">(model: {product.model})</span>
+        {/if}
+        </p>
 
         <strong class="price">${dynamicPrice}</strong>
 

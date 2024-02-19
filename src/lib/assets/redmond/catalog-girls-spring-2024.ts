@@ -88,7 +88,7 @@ export const products: Product[] = [
         price: 29.95
     },
     {
-        id: 'dt6100',
+        id: 'dt6100-black',
         model: 'dt6100-Black',
         title: 'District Cotton Hoodie, Black',
         description: '8.8oz, 100% ring spun cotton face',
@@ -99,6 +99,7 @@ export const products: Product[] = [
 ];
 
 export const title = 'Redmond Girls Tennis Apparel 2024';
+export const staticCode = 564738;
 export const schoolName = 'Redmond High School';
 export const collectionName = 'girls2024';
 import logo2023 from '$lib/assets/redmond/img/logo2023.png';

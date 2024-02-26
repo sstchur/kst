@@ -4,12 +4,12 @@
 	import ShoppingCart from "$lib/components/ShoppingCart/ShoppingCart.svelte";
     import * as catalogs from '$lib/assets/catalogs';
     import { closeDate, timeLeft } from '$lib/stores/timeLeft';
-	import { payPalEnabled } from "$lib/assets/eastlake/catalog-boys-fall-2023.js";
     const { closed } = timeLeft;
 
     const { form } = $page;
     const { school } = $page.params;
-
+    const { payPalEnabled } = catalogs[school];
+    
     $closeDate = catalogs[school].closeDate;
 
     export let data;

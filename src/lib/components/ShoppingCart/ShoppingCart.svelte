@@ -6,7 +6,7 @@
     import { loadScript } from "@paypal/paypal-js";
 
     const { school } = $page.params;
-    const { payPalEnabled, staticCode } = catalogs[school];
+    const { payPalEnabled } = catalogs[school];
 
     const shoppingCart = createShoppingCart(school);
 
@@ -18,7 +18,7 @@
     let name = '';
     let notes = '';
     let email = '';
-    let code: number | undefined = staticCode ?? undefined;
+    let code: number | undefined = undefined;
     let payPalOrder: string = '';
     
     $: isFormValid = code && name && email;
@@ -106,16 +106,11 @@
                     // Successful capture! For dev/demo purposes:
                     console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
                     const transaction = orderData.purchase_units[0].payments.captures[0];
+                    payPalSucceeded = true;
                     payPalTxnStatus = transaction.status as unknown as any;
                     payPalTxnId = transaction.id as unknown as any;
-                    
-                    email = orderData.payer.email_address ?? '<missing email address>';
-                    name = `${orderData.payer.name?.given_name} ${orderData.payer.name?.surname}`;
-                    payPalOrder = JSON.stringify(orderData);
-                    requestAnimationFrame(() => {
-                        document.forms['postPayPalForm'].submit();
-                        createShoppingCart(school).clear();
-                    });
+
+                    createShoppingCart(school).clear();
                 });
             }
             }).render('#paypal-button-container');
@@ -200,21 +195,8 @@
 
         {#if items.length > 0}
             <div class="payment">
-            {#if payPalEnabled}
-                <form name="postPayPalForm" method="post" action="?/confirmorder" on:submit={() => processing = true }>
-                    <textarea bind:value={notes} name="notes" placeholder="Enter any notes for your order here" />
-                    <input bind:value={name} name="name" type="hidden" />
-                    <input bind:value={email} name="email" type="hidden" />
-                    <input bind:value={code} name="code" type="hidden" />
-                    <input bind:value={subtotal} name="subtotal" type="hidden" />
-                    <input bind:value={salesTax} name="salesTax" type="hidden" />
-                    <input bind:value={grandTotal} name="grandTotal" type="hidden" />
-                    <input value={new Date()} name="orderDate" type="hidden" />
-                    <input value={$page.params.school} name="school" type="hidden" />
-                    <input value={JSON.stringify(items)} name="cart" type="hidden" />         
-                    <input bind:value={payPalOrder} name="payPalOrder" type="hidden" />   
-                    <div id="paypal-button-container" style="z-index:0"></div>
-                </form>
+            {#if payPalEnabled} 
+                <div id="paypal-button-container" style="z-index:0"></div>
             {:else}
                 {#if readonly}
                     <form method="post" action="?/deleteorder" on:submit={() => processing = true }>

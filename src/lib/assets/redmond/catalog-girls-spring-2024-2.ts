@@ -23,4 +23,4 @@ export const logo = logo2023;
 export const taxRate = 0.101;
 export const markup = 3.00;
 export const payPalEnabled = true;
-export const closeDate = new Date(2024, 2, 17, 23, 59, 59);
+export const closeDate = new Date(2024, 2, 22, 23, 59, 59);

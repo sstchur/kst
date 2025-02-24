@@ -9,8 +9,7 @@ const lk398: Product = {
     title: 'LK398: Port Authority Women\'s Performance Staff Polo, True Navy',
     description: '4.7-ounce, 100% polyester, moisture wicking, open neck, side vents',
     images: [ lk398Front ],
-    price: 25.00,
-    required: true,
+    price: 25.00
 };
 
 const pc78h: Product = {

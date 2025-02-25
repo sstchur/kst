@@ -1,6 +1,6 @@
 import * as eastlakeCatalog from '$lib/assets/eastlake/catalog-boys-fall-2023';
 import * as skylineCatalog from '$lib/assets/skyline/catalog';
-import * as redmondCatalog from '$lib/assets/redmond/catalog-boys-fall-2024';
+import * as redmondCatalog from '$lib/assets/redmond/catalog-girls-spring-2025';
 import * as juanitaCatalog from '$lib/assets/juanita/catalog-girls-spring-2025';
 import * as issaquahCatalog from '$lib/assets/issaquah/catalog-boys-fall-2023';
 import * as libertyCatalog from '$lib/assets/liberty/catalog-boys-fall-2023';

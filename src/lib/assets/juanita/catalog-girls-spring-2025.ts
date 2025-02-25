@@ -26,7 +26,7 @@ export const schoolName = 'Juanita High School';
 export const collectionName = 'juanita-girlsspring2025';
 import logo2025 from '$lib/assets/juanita/img/girls/spring2025/logo.png';
 export const logo = logo2025;
-export const taxRate = 0.102;
+export const taxRate = 0.103;
 export const markup = 0;
 export const payPalEnabled = true;
 export const closeDate = new Date(2025, 2, 5, 23, 59, 59);

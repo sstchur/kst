@@ -26,7 +26,7 @@ const jerzees996: Product = {
 
 
 export const title = 'Liberty Boys 2023 Tennis Apparel';
-export const schoolName = 'Liberty High School';
+export const schoolName = 'Liberty High Tennis';
 export const collectionName = 'liberty-boysFall2023';
 export const staticCode = 102938;
 

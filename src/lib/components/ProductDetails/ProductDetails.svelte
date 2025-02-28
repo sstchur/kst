@@ -208,9 +208,9 @@
             </div>
             {/if}
 
-            <div class="productOption">
+            <!-- <div class="productOption">
               <label for="memo">Memo (to identify your order):</label> <input name="memo" bind:value={memo } type="text" placeholder="Ex: student name">
-            </div>
+            </div> -->
 
         </div>
         </div>

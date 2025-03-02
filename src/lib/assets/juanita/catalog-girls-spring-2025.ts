@@ -17,6 +17,7 @@ const pc78h: Product = {
     title: 'PC78H: Port & Company Pullover Hoodie, Dark Heather Grey',
     description: '7.8-ounce, 50/50 cotton/poly fleece',
     images: [ pc78hFront ],
+    customizable: 10,
     restrictedSizes: new Set(['X-Small']),
     price: 40.00
 };

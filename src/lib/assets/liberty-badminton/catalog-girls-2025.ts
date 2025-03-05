@@ -76,7 +76,7 @@ export const logo = logo2025;
 export const taxRate = 0.102;
 export const markup = 0;
 export const payPalEnabled = true;
-export const closeDate = new Date(2025, 2, 4, 23, 59, 59);
+export const closeDate = new Date(2025, 2, 5, 14, 29, 59);
 export const products: Product[] = [
     lst350,
     st350,

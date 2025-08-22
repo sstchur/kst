@@ -1,0 +1,39 @@
+{
+	"version": 3,
+	"routes": [
+		{
+			"src": "/_app/immutable/.+",
+			"headers": {
+				"cache-control": "public, immutable, max-age=31536000"
+			}
+		},
+		{
+			"handle": "filesystem"
+		},
+		{
+			"src": "^/([^/]+?)/cart/?(?:/__data.json)?$",
+			"dest": "/[school]/cart"
+		},
+		{
+			"src": "^/([^/]+?)/cart/team/?(?:/__data.json)?$",
+			"dest": "/[school]/cart/team"
+		},
+		{
+			"src": "^/([^/]+?)/order/?(?:/__data.json)?$",
+			"dest": "/[school]/order"
+		},
+		{
+			"src": "^/([^/]+?)/order/([^/]+?)/?(?:/__data.json)?$",
+			"dest": "/[school]/order/[orderId]"
+		},
+		{
+			"src": "/.*",
+			"dest": "/![-]/catchall"
+		}
+	],
+	"overrides": {
+		"index.html": {
+			"path": ""
+		}
+	}
+}

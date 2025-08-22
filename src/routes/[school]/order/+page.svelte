@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ProductDetails from "$lib/components/ProductDetails/ProductDetails.svelte";
-    import { openModal } from 'svelte-modals';
+    import { modals } from 'svelte-modals';
     import ItemAddedModal from '$lib/components/ItemAddedModal/ItemAddedModal.svelte';
     import * as catalogs from '$lib/assets/catalogs';
 	import { createShoppingCart } from "$lib/components/ShoppingCart/shoppingCart";
@@ -17,7 +17,7 @@
     function addToCart(event) {
         const { productInstance } = event.detail;
         shoppingCart.add(productInstance);
-        openModal(ItemAddedModal, { product: productInstance, school });
+        modals.open(ItemAddedModal, { product: productInstance, school });
     }
 
 </script>

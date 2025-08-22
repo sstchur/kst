@@ -2,7 +2,7 @@
 	import { page } from "$app/stores";
 	import { cartCount } from "$lib/components/ShoppingCart/shoppingCart";
 	import { onMount } from "svelte";
-    import { Modals, closeModal } from 'svelte-modals';
+    import { Modals, modals } from 'svelte-modals';
     import Timer from '$lib/components/Timer/Timer.svelte';
     import { timeLeft } from "$lib/stores/timeLeft";
     const { closed } = timeLeft;
@@ -51,7 +51,7 @@
 <slot></slot>
 
 <Modals>
-    <div slot="backdrop" class="backdrop" on:click={closeModal}></div>
+    <div slot="backdrop" class="backdrop" on:click={modals.close()}></div>
 </Modals>
 
 <style>

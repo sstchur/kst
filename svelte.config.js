@@ -5,7 +5,7 @@ import { sveltePreprocess } from 'svelte-preprocess';
 const config = {
   preprocess: sveltePreprocess(),
   kit: {
-    adapter: vercel({ runtime: 'nodejs18.x' })
+    adapter: vercel()
   }
 };
 

@@ -41,7 +41,7 @@ export const logo = logo2026;
 export const taxRate = 0.104;
 export const markup = 0;
 export const payPalEnabled = true;
-export const closeDate = new Date(2026, 2, 7, 23, 59, 59);
+export const closeDate = new Date(2026, 2, 4, 23, 59, 59);
 export const products: Product[] = [
     lk398_navy,
     lk398_red,
